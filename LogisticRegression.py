@@ -19,21 +19,21 @@ z_list = z.values.tolist()
 y_list = y.values.tolist()
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.3
+    X, y, random_state=0, test_size=0.99
 )
 
 model = LogisticRegression(solver='liblinear', random_state=0, max_iter=100000)
 model.fit(X_train, y_train)
 
-#importance = model.coef_[0]
-# summarize feature importance
+importance = model.coef_[0]
+#summarize feature importance
 #for i,v in enumerate(importance):
 #	print('Feature: %0d, Score: %.5f' % (i,v))
 
 predict = model.predict(X_test).tolist()
-print(len(predict))
-print(len(y_train))
-print(len(y_list))
+print('Total tested: %0d'%len(predict))
+print('Total trained: %0d'%len(y_train))
+print('Total samples: %0d'%len(y_list))
 
 #print(len(z_list))
 #dict = {'Repack': y_list, 'Hash': z_list, 'Pred': predict}  

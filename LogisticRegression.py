@@ -19,7 +19,7 @@ z_list = z.values.tolist()
 y_list = y.values.tolist()
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, random_state=0, test_size=0.99
+    X, y, random_state=0, test_size=0.3
 )
 
 model = LogisticRegression(solver='liblinear', random_state=0, max_iter=100000)

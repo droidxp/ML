@@ -9,7 +9,7 @@ import csv
 
 
 # Load CSV file
-data = pd.read_csv('DS_Network_Flow_Final_Protocol.csv')
+data = pd.read_csv('DS_Network_Flow_Final_Protocol_avg_min_max.csv')
 
 # Select features and target variable
 X = data.drop(['repack','hash'], axis=1)

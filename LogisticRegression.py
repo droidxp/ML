@@ -12,8 +12,8 @@ import csv
 data = pd.read_csv('DS_Network_Flow_Final_Protocol_avg_min_max.csv')
 
 # Select features and target variable
-X = data.drop(['repack','hash'], axis=1)
-y = data['repack']
+X = data.drop(['repack','hash','malicious'], axis=1)
+y = data['malicious']
 z = data['hash']
 z_list = z.values.tolist()
 y_list = y.values.tolist()

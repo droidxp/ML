@@ -26,7 +26,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 #model = tree.DecisionTreeClassifier()
 #model = RandomForestClassifier(n_estimators=390, random_state=123, max_depth=13)
-model = RandomForestClassifier(n_estimators=270, random_state=123, min_samples_split= 14, min_samples_leaf= 19, max_samples= 3274, max_features= 2000, max_depth=13)
+model = RandomForestClassifier(n_estimators=270, random_state=123, min_samples_split= 14, min_samples_leaf= 19, max_samples= 3274, max_features= 2000, max_depth=12)
 
 #param_dist = {'n_estimators': randint(50,500),
 #              'max_depth': randint(1,20)}

@@ -5,11 +5,15 @@ from sklearn.ensemble import RandomForestClassifier
 
 Malware = pd.read_csv("Final_file.csv")
 
-Malware = Malware.fillna(Malware.iloc[:,10259].median())
 
 unique_columns = Malware.loc[:, Malware.nunique() == 1]
 unique_columns = list(unique_columns.columns)
 Malware_cleaned = Malware.drop(unique_columns, axis=1)
+
+print(Malware_cleaned.info)
+
+Malware_cleaned = Malware_cleaned.fillna(Malware.iloc[:,5373].median())
+Malware_cleaned = Malware_cleaned.dropna()
 
 X = Malware_cleaned.drop(['hash','malicious'], axis=1)
 y = Malware_cleaned['malicious']
@@ -24,8 +28,8 @@ model.fit(X_train, y_train)
 feature_names = model.feature_names_in_
 importances = model.feature_importances_
 feature_imp_df = pd.DataFrame({'Feature': feature_names, 'Gini Importance': importances}).sort_values('Gini Importance', ascending=False) 
-
+print(feature_imp_df[:20])
 Malware_cleaned = Malware_cleaned.loc[:,list(feature_imp_df.Feature[:20])+['hash','malicious']]
 print(Malware_cleaned)
-#Malware_cleaned = Malware_.dropna()
-Malware_cleaned.to_csv("cleaned_file.csv", index = False)
+
+Malware_cleaned.to_csv("cleaned_file.csv", index_label = 'index', index = True)

@@ -21,7 +21,7 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, random_state=0, test_size=0.3
 )
 
-model = RandomForestClassifier(n_estimators=330, random_state=123, min_samples_split= 14, min_samples_leaf= 9, max_samples= 3296, max_features= 'log2', max_depth=None)
+model = RandomForestClassifier(n_estimators=400, random_state=123, min_samples_split= 18, min_samples_leaf= 3, max_samples= 3296, max_features= 'log2', max_depth=None)
 model.fit(X_train, y_train)
 
 

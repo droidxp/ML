@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 
 Malware = pd.read_csv("Final_file.csv")
 
-Malware = Malware.fillna(Malware.iloc[:,5699].median())
+Malware = Malware.fillna(Malware.iloc[:,10259].median())
 
 unique_columns = Malware.loc[:, Malware.nunique() == 1]
 unique_columns = list(unique_columns.columns)

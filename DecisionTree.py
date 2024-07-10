@@ -60,16 +60,16 @@ model.fit(X_train, y_train)
 #print('Best hyperparameters:',  rand_search.best_params_)
 
 
-#fig, axes = plt.subplots(nrows = 1,ncols = 1,figsize = (4,4), dpi=800)
-#tree.plot_tree(model.estimators_[0],
-#               filled = True);
-#fig.savefig('rf_individualtree.png')
+fig, axes = plt.subplots(nrows = 1,ncols = 1,figsize = (4,4), dpi=800)
+tree.plot_tree(model.estimators_[0],
+               filled = True);
+fig.savefig('rf_individualtree.png')
 
-predict = model.predict(X_test).tolist()
+#predict = model.predict(X_test).tolist()
+#dict = {'Index': X_test.index , 'Malicious': y_test, 'Pred': predict}  
 
-
-#dict = {'Malicious': y_list, 'Hash': z_list, 'Pred': predict}  
-dict = {'Index': X_test.index , 'Malicious': y_test, 'Pred': predict}  
+predict = model.predict(X).tolist()
+dict = {'Index': X.index , 'Malicious': y, 'Pred': predict} 
        
 # create a Pandas DataFrame from the dictionary
 df = pd.DataFrame(dict) 

@@ -2,15 +2,15 @@ import pandas as pd
 from sklearn.model_selection import train_test_split,RandomizedSearchCV
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
+from os.path import dirname, join
 
-Malware = pd.read_csv("Final_file.csv")
-
+current_dir = dirname(__file__)
+file_path = join(current_dir, "Final_file.csv")
+Malware = pd.read_csv(file_path)
 
 unique_columns = Malware.loc[:, Malware.nunique() == 1]
 unique_columns = list(unique_columns.columns)
 Malware_cleaned = Malware.drop(unique_columns, axis=1)
-
-print(Malware_cleaned.info)
 
 Malware_cleaned = Malware_cleaned.fillna(Malware.iloc[:,5373].median())
 Malware_cleaned = Malware_cleaned.dropna()
@@ -28,8 +28,15 @@ model.fit(X_train, y_train)
 feature_names = model.feature_names_in_
 importances = model.feature_importances_
 feature_imp_df = pd.DataFrame({'Feature': feature_names, 'Gini Importance': importances}).sort_values('Gini Importance', ascending=False) 
-print(feature_imp_df[:20])
+
 Malware_cleaned = Malware_cleaned.loc[:,list(feature_imp_df.Feature[:20])+['hash','malicious']]
-print(Malware_cleaned)
 
 Malware_cleaned.to_csv("cleaned_file.csv", index_label = 'index', index = True)
+
+file_path = join(current_dir, "large_ds.csv")
+TSE = pd.read_csv(file_path)
+
+Malware_cleaned_family = pd.merge(Malware_cleaned, TSE[['sha256','family']], left_on='hash', right_on='sha256', how='left')
+Malware_cleaned_family = Malware_cleaned_family.drop(['sha256'], axis=1)
+Malware_cleaned_family = Malware_cleaned_family.dropna()
+Malware_cleaned_family.to_csv("cleaned_file_family.csv", index_label = 'index', index = True)

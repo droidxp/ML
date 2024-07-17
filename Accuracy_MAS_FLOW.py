@@ -1,8 +1,8 @@
 import pandas as pd
-from pandasql import sqldf
 from os.path import dirname, join
 
 current_dir = dirname(__file__)
+
 file_path = join(current_dir, "large_ds.csv")
 TSE = pd.read_csv(file_path)
 
@@ -33,4 +33,6 @@ print('Precision: %0f'%PRECISION)
 print('Recall: %0f'%RECALL)
 print('F_one Score: %0f'%F_one)
 
+FINAL_DS_MAS_FLOW.rename(columns={'Pred': 'Flow_Network_Analysis', 'apidetected': 'MAS_Analysis'}, inplace=True)
+FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.drop(['index'], axis=1)
 FINAL_DS_MAS_FLOW.to_csv("final_ds_mas_flow.csv", index_label = 'index', index = True)

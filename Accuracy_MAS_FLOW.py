@@ -1,0 +1,36 @@
+import pandas as pd
+from pandasql import sqldf
+from os.path import dirname, join
+
+current_dir = dirname(__file__)
+file_path = join(current_dir, "large_ds.csv")
+TSE = pd.read_csv(file_path)
+
+file_path = join(current_dir, "cleaned_file.csv")
+CLEAR = pd.read_csv(file_path)
+
+file_path = join(current_dir, "RandomForest.csv")
+FOREST = pd.read_csv(file_path)
+
+FINAL_DS_MAS_FLOW = pd.merge(CLEAR, FOREST[['Index','Pred']], left_on='index', right_on='Index', how='left')
+FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.drop(['Index'], axis=1)
+FINAL_DS_MAS_FLOW = pd.merge(FINAL_DS_MAS_FLOW, TSE[['sha256','apidetected']], left_on='hash', right_on='sha256', how='left')
+FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.drop(['sha256'], axis=1)
+FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.dropna()
+
+TP = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 1.0) | (FINAL_DS_MAS_FLOW['apidetected'] == True))]
+FP = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 0.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 1.0) | (FINAL_DS_MAS_FLOW['apidetected'] == True))]
+FN = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 0.0) & (FINAL_DS_MAS_FLOW['apidetected'] == False))]
+PRECISION = len(TP)/(len(TP)+len(FP))
+RECALL = len(TP)/(len(TP)+len(FN))
+F_one =  2*((PRECISION*RECALL)/(PRECISION+RECALL))
+
+print('Total Samples: %0d'%len(FINAL_DS_MAS_FLOW))
+print('Total True Positive: %0d'%len(TP))
+print('Total False Positive: %0d'%len(FP))
+print('Total False Negative: %0d'%len(FN))
+print('Precision: %0f'%PRECISION)
+print('Recall: %0f'%RECALL)
+print('F_one Score: %0f'%F_one)
+
+FINAL_DS_MAS_FLOW.to_csv("final_ds_mas_flow.csv", index_label = 'index', index = True)

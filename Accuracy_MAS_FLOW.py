@@ -35,4 +35,4 @@ print('F_one Score: %0f'%F_one)
 
 FINAL_DS_MAS_FLOW.rename(columns={'Pred': 'Flow_Network_Analysis', 'apidetected': 'MAS_Analysis'}, inplace=True)
 FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.drop(['index'], axis=1)
-FINAL_DS_MAS_FLOW.to_csv("final_ds_mas_flow.csv", index_label = 'index', index = True)
+FINAL_DS_MAS_FLOW.to_csv("final_ds_mas_flow.csv", index_label = 'index', index = False)

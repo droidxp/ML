@@ -9,7 +9,10 @@ TSE = pd.read_csv(file_path)
 file_path = join(current_dir, "cleaned_file.csv")
 CLEAR = pd.read_csv(file_path)
 
+#print(CLEAR.isin(['52EE30D656D82006827D6C6F47FAF2A8896A8A02C76B701B8126EDE1A4AB9781']).any())
+
 file_path = join(current_dir, "RandomForest.csv")
+#file_path = join(current_dir, "efc.csv")
 FOREST = pd.read_csv(file_path)
 
 FINAL_DS_MAS_FLOW = pd.merge(CLEAR, FOREST[['Index','Pred']], left_on='index', right_on='Index', how='left')
@@ -18,9 +21,15 @@ FINAL_DS_MAS_FLOW = pd.merge(FINAL_DS_MAS_FLOW, TSE[['sha256','apidetected']], l
 FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.drop(['sha256'], axis=1)
 FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.dropna()
 
-TP = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 1.0) | (FINAL_DS_MAS_FLOW['apidetected'] == True))]
-FP = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 0.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 1.0) | (FINAL_DS_MAS_FLOW['apidetected'] == True))]
-FN = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 0.0) & (FINAL_DS_MAS_FLOW['apidetected'] == False))]
+#TP = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 1.0) | (FINAL_DS_MAS_FLOW['apidetected'] == True))]
+#FP = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 0.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 1.0) | (FINAL_DS_MAS_FLOW['apidetected'] == True))]
+#FN = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 0.0) & (FINAL_DS_MAS_FLOW['apidetected'] == False))]
+
+TP = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 1.0) )]
+FP = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 0.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 1.0) )]
+FN = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 0.0) )]
+
+
 PRECISION = len(TP)/(len(TP)+len(FP))
 RECALL = len(TP)/(len(TP)+len(FN))
 F_one =  2*((PRECISION*RECALL)/(PRECISION+RECALL))

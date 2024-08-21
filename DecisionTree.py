@@ -84,6 +84,9 @@ print('Total samples: %0d'%len(y_list))
 print(classification_report(y_test, model.predict(X_test)))
 print(confusion_matrix(y_test, model.predict(X_test)))
 
+
+
+
 #feature_names = model.feature_names_in_
 
 #importances = model.feature_importances_

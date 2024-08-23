@@ -16,6 +16,7 @@ FOREST = pd.read_csv(file_path)
 
 FINAL_DS_MAS_FLOW = pd.merge(CLEAR, FOREST[['Index','Pred']], left_on='index', right_on='Index', how='left')
 FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.drop(['Index'], axis=1)
+
 FINAL_DS_MAS_FLOW = pd.merge(FINAL_DS_MAS_FLOW, TSE[['sha256','apidetected']], left_on='hash', right_on='sha256', how='left')
 FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.drop(['sha256'], axis=1)
 FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.dropna()
@@ -37,28 +38,21 @@ print('F_one Score: %0f'%F_one)
 
 TP_FLOW = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 1.0) & (FINAL_DS_MAS_FLOW['apidetected'] == False))]
 TP_MAS = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 0.0) & (FINAL_DS_MAS_FLOW['apidetected'] == True))]
-TP_MAS_FLOW = FINAL_DS_MAS_FLOW.loc[(FINAL_DS_MAS_FLOW['malicious'] == 1.0) & ((FINAL_DS_MAS_FLOW['Pred'] == 1.0) & (FINAL_DS_MAS_FLOW['apidetected'] == True))]
 
 
 FINAL_DS_MAS_FLOW.rename(columns={'Pred': 'Flow_Network_Analysis', 'apidetected': 'MAS_Analysis'}, inplace=True)
 FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.drop(['index'], axis=1)
 FINAL_DS_MAS_FLOW.to_csv("final_ds_mas_flow.csv", index_label = 'index', index = False)
 
-
-
 only_flow = len(set(TP_FLOW['hash']))
 only_mas = len(set(TP_MAS['hash']))
-only_mas_flow = len(set(TP_MAS_FLOW['hash']))
+only_mas_flow = len(TP)-only_flow-only_mas
 
 venn2(subsets = (only_flow, only_mas, only_mas_flow), 
-      set_labels = ('Group A',  
-                    'Group B'), 
-      set_colors=("orange", 
+      set_labels = ('Flow Analysis',  
+                    'Mining Sandbox'), 
+      set_colors=("green", 
                   "blue"),alpha=0.7) 
 
 
 plt.show()
-
-print(only_flow)
-print(only_mas)
-print(only_mas_flow)

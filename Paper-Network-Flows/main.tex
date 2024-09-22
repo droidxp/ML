@@ -23,7 +23,7 @@
 \usepackage{multirow}
 \usepackage{blindtext}
 
-
+\usepackage{mdframed}
 
 \hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
@@ -47,7 +47,17 @@
         %identifierstyle=\color{red},
        }
        
-
+\newmdtheoremenv [
+ outerlinewidth = 1 ,
+ roundcorner = 1pt,
+ leftmargin = 1,
+ rightmargin = 1,
+ backgroundcolor = gray!20,
+ outerlinecolor = blue!70!black,
+ %innertopmargin = \topskip, 
+ %splittopskip = \topskip ,
+ ntheorem = false,
+] {finding}{Finding}
 
 % Pictures
 \usepackage{graphicx}       
@@ -76,20 +86,23 @@
 
 \newcommand{\mas}{MAS approach\xspace}
 
+\newcommand{\net}{Network Traffic Analysis\xspace}
+
+\newcommand{\ml}{Machine Learning process\xspace}
+
 \newcommand{\fm}[1]{\emph{#1}\xspace}
 
 \newcommand{\gps}{\fm{gappusin}}  % the gappusin family.
 
+\newcommand{\tjk}{\fm{torjok}}
+
 \newcommand{\sscore}{Similarity Score\xspace}
 
-\newcommand{\rqa}{What is the impact of considering a larger and diverse dataset on the accuracy of the \mas for malware classification?}
+\newcommand{\rqa}{Can the use of machine learning technology using network traffic data to improve the accuracy of \mas for malware identification ?}
 
-\newcommand{\rqb}{How much gain we obtain on the performance of the \mas for malware classification when considering trace analysis?}
+\newcommand{\rqb}{Which algorithms are effective to be used for training models base on network traffic data for malware identification?}
 
-\newcommand{\rqc}{What is the influence of the similarity between the original and repackaged
-                  versions of the apps on the performance of the \mas for malware classification?}
-
-\newcommand{\rqd}{What is the influence of the malware family (e.g., \fm{gappusin}, \fm{kuguo}, \fm{dowgin}) on the performance of the \mas for malware classification?}
+\newcommand{\rqc}{Which  malware family (e.g., \fm{gappusin}, \fm{kuguo}, \fm{dowgin}) the Flow Analysis has the best performance on alone, and with \mas support for malware identification?}
 
 \newcommand{\rqe}{How much gain we obtain on the performance of the \mas for malware classification when considering its extensions?}
 
@@ -125,12 +138,13 @@
 \newcommand{\malwaresN}{\textcolor{blue}{87.98}}
 \newcommand{\appsGps}{\textcolor{black}{1,337}\xspace}
 \newcommand{\appsGpsFN}{\textcolor{black}{1,170}\xspace}
+\newcommand{\fhc}{FHC-Study\xspace}
 
 
 
 \begin{document}
 
-\title{Complementing Android Mining Sandbox Approach with Network-Flows for Malware Identification}
+\title{Complementing Mining Android Sandbox Approach with Network Flows for Malware Identification}
 
 
 \author{Francisco Costa,
@@ -153,10 +167,8 @@ E-mail: \{francisco.costa\}@aluno.unb.br and \{rbonifacio\}@unb.br.
 
 
 \maketitle
-
-
 \begin{IEEEkeywords}
-Android Malware Detection, Dynamic Analysis, Mining Android Sandboxes.
+Android Malware Detection, Dynamic Analysis, Network Traffic Analysis, Smartphone, Mining Android Sandboxes.
 \end{IEEEkeywords}
 
 \input{introduction}
@@ -170,12 +182,6 @@ Android Malware Detection, Dynamic Analysis, Mining Android Sandboxes.
 
 \bibliographystyle{IEEEtran}
 \bibliography{ref}
-
-
-
-
-
-
 
 
 \end{document}

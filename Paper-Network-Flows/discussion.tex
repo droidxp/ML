@@ -1,1 +1,33 @@
 \section{Discussion}\label{sec:discussion}
+
+The previous evaluation demonstrates the efficacy of \net in supporting the \mas for detecting malware through their network traffic. In this section, we address our research questions from Section~\ref{sec:Methodology}, present the implications of the results, and discuss certain limitations that cannot be ignored. These limitations also highlight areas for future research.
+
+\subsection{Answers to the Research Questions}\label{sec:questions}
+
+The assessment of our method in the previous section allows us to answer the research questions proposed in the Methodology Section, as follows:
+
+\begin{enumerate}
+    \item \textbf{Performance of the \mas with \net support (RQ1).} For this first question, our study indicates that the accuracy of the \mas improves when combined with machine learning technology by training on network traffic data. While in the \fhc, the \mas had lower precision and recall, resulting in an accuracy of $0.54$, when we combined it with \net, the accuracy significantly improved, reaching a \fone of $0.91$, compared to the $0.54$ reported in the \fhc.
+    
+    \item \textbf{Machine Learning Algorithms Analysis (RQ2).} Our experimental findings provide evidence that, among all the machine learning algorithms investigated in our work, the Random Forest algorithm outperforms the others, achieving higher values across the explored metrics for our dataset (\cds).
+    
+    \item \textbf{Malware Family Detection Accuracy (RQ3).} The results show that some families significantly benefit from the combination of both approaches. For example, the \tjk and \gps families show improvements in accuracy of $88.23\%$ and $84.42\%$, respectively. The main characteristics of these malware families include downloading adware without the user's knowledge, automatically connecting to and interacting with remote servers, and initiating paid services~\cite{DBLP:journals/jnca/WangCYYPJ19}. Therefore, the combination of both approaches achieves high accuracy, particularly for malware families that interact with networks frequently.
+\end{enumerate}
+
+\subsection{Implications}\label{sec:implications}
+
+In this section, we highlight some implications based on the results presented in Section~\ref{sec:results}.
+
+Complementing the \fhc, our findings lead to improved accuracy in malware classification, indicating that \net can complement the \mas. Previous works~\cite{DBLP:conf/wcre/BaoLL18,DBLP:conf/iceccs/LeB0GL18,DBLP:journals/jss/CostaMMSSBNR22} incorrectly identified \mas as a solution with a reasonable \fone, based on results from a restricted dataset composed of fewer than 20 malware families. In contrast, the \fhc revealed negative results for the \mas when using a more representative dataset (\cds), which included a greater variety of malware families responsible for higher false negative rates. This, in turn, compromises the accuracy of the \mas.
+
+
+Our work addresses the problem identified by the \fhc, showing that by combining \mas with \net, we can detect different malicious behaviors and reduce the number of false negatives. More importantly, by combining both approaches, we can identify more malware families that use polymorphism or obfuscation to evade detection~\cite{DBLP:conf/acsac/MoserKK07}, but exhibit high and suspicious interactions with the network. Malware from the \gps and \tjk families are examples of malicious apps that use these techniques, yet their malicious behavior can be detected through \net.
+
+Still, our study also reveals that for some malware families, \net fails to detect their malicious behavior, while the \mas successfully identifies them as malware. This proves that \net is not a complete solution, and highlights the importance of combining both approaches. Among all families in the \cds 
+ (116 families), 30 malware families have samples that \net do not flagged as malicious, but which were identify as malicious by the \mas. Examples include the \fm{Dowgin} family (11 samples out of 187) and the \fm{Revmob} family (10 samples out of 207), where only the \mas was able to identify them as malware. Also, \fhc show that \mas is able to label as malware, $100\%$ of samples from \fm{Airpush} family, just with \mas. The \net just confirmed the maliciousness of the samples. This demonstrates that the current state-of-the-art sandbox techniques remain effective for certain malware families.
+
+\subsection{Limitations}\label{sec:limitations}
+
+The previous assessment of results, proved that \mas and \net, when complementing each other, is an effective approach for malware detection. However, the proposed method has some limitations that can not be ignored, and are mentioned below:\newline
+\textbf{Training set.} The \cds contains $2,895$ malware samples across $116$ families. When considering the number of apps available on official markets today, we realize that our sample is far from representative. Currently, there are millions of apps on Google Play~\cite{bankmycell}, with a significant number of malicious apps hidden among them. We believe that there are still malware families that cannot be detected by the \mas, even when combined with \net. To address this issue, we propose expanding the training set and testing additional detection models. The malware detection capability improves as the size of the training samples increases, enabling the solution to detect more types of malware. Finally, as in the \fhc, our work also focuses solely on Android repackaged malware, so we cannot generalize our findings to malware targeting other platforms.\newline
+\textbf{Malicious behaviors triggered.} As explained in Section~\ref{sec:mas}, during the execution phase of the \fhc, DroidXP restarts the explored apps to presumably activate the malicious behavior of the malware. However, we are uncertain whether all malicious activities were fully triggered without actual user inputs. Bao et al.~\cite{DBLP:conf/wcre/BaoLL18} provides evidence that DroidBot outperforms other test generation tools by uncovering a larger number of potential malicious behaviors. Nevertheless, we are unsure about its ability to accurately simulate user input, which would make the collected traffic resemble real-world scenarios. Furthermore, since we used a simulated environment, it is possible that some malware could detect this and avoid triggering their malicious behaviors, thus affecting the traffic collection process. In the future, we plan to explore more recent test generation tools that could cover a wider range of app behaviors. Additionally, we intend to incorporate real devices into the traffic collection process to better detect malware that can bypass environment emulators.

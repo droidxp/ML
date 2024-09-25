@@ -32,7 +32,7 @@ a total of {$1,395$} repackaged apps flagged as malware ({$34.22$\%} of the tota
 {\bf Flow Analysis.} Surprisingly, also considering the \cds (\apps pairs), we explored Flow Analysis with machine learning algorithm (Random Forest). As described in Section~\ref{sec:learning}, we trained $70$\% of the samples and tested on $30$\% of samples different from the trained ones. Our \cds cover \apps pair with $2,969$ original apps and $2,918$ malicious apps, totaling $5,887$ balanced samples. Accordingly, we trained our model on $4,120$ samples ($70$\% of $5,887$), and applied the trained model to $1,767$ samples ($30$\% of $5,887$). The Flow Analysis labeled a total of $690$ apps as malware, failed to correctly label $124$ assets as malware, and wrongly labeled the repackaged versions of $175$ samples (second row of Table~\ref{tab:accuracy}). Our Flow Analysis had a better performance, when compared to \mas, with an accuracy rate of $82$\%. From these results, we can conclude that Flow Analysis could be a complementary technique to \mas, improving the identification of malicious code in Android apps. In the next section, we present the results of combining both techniques for suspicious app detection.
 
 \begin{finding}
-The experimental results demonstrate that Network Flow analysis, combined with a machine learning algorithm, outperforms the \mas, with \fone  of $0.54$ and $0.82$, respectively. This proves to be an effective strategy to support the \mas for malware identification.
+The experimental results demonstrate that Network Flow analysis, combined with a machine learning algorithm, outperforms the \mas, with \fone of $0.82$. This proves to be an effective strategy to support the \mas for malware identification.
 \end{finding}
 
 
@@ -62,17 +62,13 @@ Finally, to confirm our hypothesis from Section~\ref{sec:comparison}, we investi
 To understand the benefits of each method, we further analyze the contribution of them for the accuracy. We report the raise of True Positive (TP) and False Positive (FP) for each technique in Figure~\ref{fig:venn}. The figure reveal that different approaches present different contribution to the final detection result.
 
 \begin{finding}
-When combining both techniques, we reduces the number of
-false negatives (in comparison with the vanilla \mas), with the side
-effect of increasing the number of false positives. However, this configuration
-improves the overall accuracy (\fone) of \mas at malware detection,
-from 0.54 to 0.62 at \cds.
+When combining both techniques, we improve the overall accuracy (\fone) of \mas at malware detection, from $0.54$ to $0.91$ at \cds.
 \end{finding}
 
 \begin{figure}[t!]
   \centering
   \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.52\textwidth]{image/vennTP.png} \\[\abovecaptionskip]
+    \includegraphics[width=0.50\textwidth]{image/vennTP.png} \\[\abovecaptionskip]
     \small (a) True Positive raise
   \end{tabular}
 

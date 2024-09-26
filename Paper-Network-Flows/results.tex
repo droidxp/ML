@@ -68,12 +68,12 @@ When combining both techniques, we improve the overall accuracy (\fone) of \mas 
 \begin{figure}[t!]
   \centering
   \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.50\textwidth]{image/vennTP.png} \\[\abovecaptionskip]
+    \includegraphics[width=0.54\textwidth]{image/vennTP.png} \\[\abovecaptionskip]
     \small (a) True Positive raise
   \end{tabular}
 
   \begin{tabular}{@{}c@{}}
-    \includegraphics[width=0.52\textwidth]{image/vennFP.png} \\[\abovecaptionskip]
+    \includegraphics[width=0.54\textwidth]{image/vennFP.png} \\[\abovecaptionskip]
     \small (b) False Positive raise
   \end{tabular}
 
@@ -94,7 +94,9 @@ In this section, we present the performance of our experiment based on each malw
 
 Among the $10$ most representative families, combining both strategies, the families with the highest earnings are \tjk and \gps. Regarding \tjk family malware, among the 34 samples evaluated, the \fhc flagged only 2 apps ($5.88$\%) as malicious. However, when combined with Flow Analysis, both approaches correctly labeled $32$ assets ($94.11$\%) as malicious, marking an $88.23$\% increase. Despite this, the \tjk family does not have as many representative samples as the \gps family, which accounts for $32.80$\% of all samples in the \cds, with $1,337$ samples. Among them, the \mas flagged $334$ samples ($12.93$\%) as malicious, while the combination of them indicated that $1,275$ ($95.36$\%) had suspicious activity, representing an $82.42$\% increase. Malware belonging to the \gps family automatically connects to networks, communicates with remote servers, and downloads and installs other apps or adware without the user’s knowledge\cite{DBLP:journals/jnca/WangCYYPJ19}. Due to their high network interaction, they are more easily detected by \net, proving it to be more efficient in detecting samples with malicious network behaviors.
 
-Still, we should also note that $2$ families can correctly identified all samples as malware just with the \mas, \fm{airpush} and \fm{leadbolt}, with $120$ and $43$ samples respectively. At this case, the \net do not contribute to improving the ability to detect malicious activity. Figure~\ref{fig:bar} shows the detection performance of our strategies for the $10$ most representative families. In the figure, we can see that samples for the \gps family, had the the greatest benefit of the malware detection rate, with the support of flow analysis.
+Still, we should also note that $2$ families can correctly identified all samples as malware just with the \mas, \fm{airpush} and \fm{leadbolt}, with $120$ and $43$ samples respectively. At this case, the \net do not contribute to improving the ability to detect malicious activity, and just confirms the  maliciousness of the samples. The result reveals that the \mas remain effective for certain malware families. Figure~\ref{fig:bar} shows the detection performance of our strategies for the $10$ most representative families. In the figure, we can see that samples for the \gps family, had the the greatest benefit of the malware detection rate, with the support of flow analysis.
+
+
 
 \begin{figure*}[h]
   \centering

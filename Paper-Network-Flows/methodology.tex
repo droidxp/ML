@@ -38,16 +38,15 @@ To collect sensitive data from all apps, the \fhc leverages the DroidXP infrastr
 \end{enumerate}
 
 
-
 The study consider that a sandbox of app identifies a malware whenever the malicious app version makes a call to a sensitive API, which was not called during the exploratory phase of your original version, as present at Figure~\ref{fig:mine}.
 
 
 \begin{figure*}[h]
   \centering
   
-    \includegraphics[width=0.55\textwidth]{image/mineSandbox.png} \\[\abovecaptionskip]
+    \includegraphics[width=0.60\textwidth]{image/mineSandbox.png} \\[\abovecaptionskip]
     
-  \caption{Overview of \fhc for malware identification}\label{fig:mine}
+  \caption{Overview of \mas for malware identification}\label{fig:mine}
 \end{figure*}
 
 
@@ -187,9 +186,6 @@ In the next step, we began our study, using machine learning (ML) technique, whi
 \end{itemize}
 
 We compute \emph{Precision}, \emph{Recall}, and \emph{F-measure} ($F_1$) from
-the number of true-positives, false-positives, and false-negatives (using standard
+the number of TP, FP, and FN (using standard
 formulae). We use basic statistics (average, median, standard deviation) to identify the
 accuracy of the \mas and \ml for malware classification, at our \cds.
-
-
-

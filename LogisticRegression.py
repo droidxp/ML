@@ -25,6 +25,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 model = LogisticRegression(solver='liblinear', random_state=0, max_iter=100000)
 model.fit(X_train, y_train)
 
+
+
 importance = model.coef_[0]
 #summarize feature importance
 #for i,v in enumerate(importance):

@@ -4,6 +4,10 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from os.path import dirname, join
 
+from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import f1_score
+from sklearn.metrics import auc
+
 current_dir = dirname(__file__)
 file_path = join(current_dir, "Final_file.csv")
 Malware = pd.read_csv(file_path)
@@ -24,6 +28,19 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 model = RandomForestClassifier(n_estimators=230, random_state=123, min_samples_split= 16, min_samples_leaf= 19, max_samples= 3274, max_features= 2000, max_depth=10)
 model.fit(X_train, y_train)
+
+
+# predict probabilities
+lr_probs = model.predict_proba(X_test)
+# keep probabilities for the positive outcome only
+lr_probs = lr_probs[:, 1]
+# predict class values
+yhat = model.predict(X_test)
+lr_precision, lr_recall, _ = precision_recall_curve(y_test, lr_probs)
+lr_f1, lr_auc = f1_score(y_test, yhat), auc(lr_recall, lr_precision)
+# summarize scores
+print('Logistic: f1=%.3f auc=%.3f' % (lr_f1, lr_auc))
+
 
 feature_names = model.feature_names_in_
 importances = model.feature_importances_

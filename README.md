@@ -22,7 +22,12 @@ At our work we used the curated dataset of 4,076 app pairs (original/repackage) 
 
 After the exploratory step, we combine the initial 76 features (excluding Destination Port and Hash), with 15 more relevant destination Ports, and 9 statistical functions, taking advantage of Jupyter Notebook [script](https://github.com/droidxp/ML/blob/master/features_enge.ipynb) file. By the end of this step, we have a [dataset](https://unbbr-my.sharepoint.com/:x:/g/personal/180040723_aluno_unb_br/Eclh5qBUIblAvKj7EPU-RcMB7c4YfXF2ezKXiWh-gij5tw?e=5JBOs3) with a total of 10,262 features. To achieve greater efficiency from our models, we selected just the 20 most relevant features based on Gini Importance or Mean Decrease in Impurity, using the Python [script](https://github.com/droidxp/ML/blob/master/clearFile.py). After this procedure, we get the following [dataset](https://github.com/droidxp/ML/blob/master/cleaned_file.csv), with 20 most relevant features from all 4,076 app pair (5,887 apps).
 
-### Data Collection
+### Data Analysis
 
-With this [dataset](https://github.com/droidxp/ML/blob/master/clearFile.py), we use a python scripts ...
+With this [dataset](https://github.com/droidxp/ML/blob/master/clearFile.py), we use diverse python scripts to compute the metrics of reveral models, for our Machine Learning technique, such as: Precision, recall, F1-score and AUC (Area Under Curve). Each script generate the respective csv file of model prediction as present bellow:
 
++ [Random Forest](https://github.com/droidxp/ML/blob/master/DecisionTree.py). [CSV](https://github.com/droidxp/ML/blob/master/RandomForest.csv) file.
++ Logistic Regression
++ Liner Discriminant Analysis - LDA
++ Quadratic Discriminant Analysis - QDA
++ Energy Based Flow Classifier - EFC

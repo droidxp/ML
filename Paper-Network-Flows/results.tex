@@ -1,30 +1,70 @@
 \section{Results}\label{sec:results}
 
-This section presents and discusses the results of our study using the \cds  (4,076 pairs). We evaluate it from the following aspects: malware detection performance for each strategies, \mas and \net (Section~\ref{sec:comparison}). Then, we detail the results of combining both approaches, highlighting where they can complement each other (Section~\ref{sec:strategy}). Finally, we present the detection rates for each malware family, as well as the performance on unknown families (Section~\ref{sec:family}). We remind the reader that all results presents at Sections above are based on Random Forest approach, since it delivered the best performance, as present at next Section (Section~\ref{sec:ml}).
+This section presents the results of our research. In Section~\ref{sec:ml}, we compare the
+performance of machine learning algorithms in classifying the apps in the \cds dataset
+as either malware or non-malware, using network flows collected during the execution of the apps
+in conjunction with calls to sensitive APIs. Recall that previous research employed the \emph{vanilla}
+\mas, which relied solely on calls to sensitive APIs for app classification. Our previous
+research showed that the performance of the vanilla \mas is compromised when consider
+the \cds, in particular due to samples from specific malware families {\color{red}(such as ABC)~\cite{}}.
+In Section~\ref{sec:new-mas-approach}, we present the gains in classification performance of our extended \mas,
+which combines the analysis of sensitive API calls with our designed network flow ML-based classification method.
+Finally, in Section~\ref{sec:family-assessment}, we present assessments of our extended
+version of the \mas that focus on the malware families responsible for the poor performance of
+the vanilla \mas on the \cds.
 
 \subsection{Comparison of Machine Learning Algorithms}\label{sec:ml}
 
-In this section, we present the performance of popular machine learning algorithms to determine which model could better support the \mas in malware detection. We also explore a novel classifier algorithm called the Energy-Based Flow Classifier (EFC)~\cite{DBLP:journals/tnsm/PontesSGBM21}, which offers certain advantages over traditional machine learning algorithms, such as the ability to infer a model using only benign traffic samples~\cite{DBLP:journals/tnsm/PontesSGBM21}, eliminating the need to label malicious samples.
 
-For the comparison of popular classification algorithms, we selected several techniques, including Random Forest, Linear Discriminant Analysis (LDA), Quadratic Discriminant Analysis (QDA), and Logistic Regression. To find the best-fitting model, we varied multiple parameters and used cross-validation to maximize the performance of each machine learning algorithm.
+As discussed {\color{red}in Section~\ref{}}, we extended the \mas{} approach to collect network
+flow information from the apps during their execution via DroidBot campaigns.
+We then replicated our previous experiments using this extended version of the \mas{} approach
+that incorporates network flow data collection. Finally, we conducted an experiment to
+compare the performance of machine learning algorithms leveraging this network flow data
+for malware classification. This step of our research considers the following standard ML algorithms:
 
-Figure~\ref{fig:metrics} shows that the trained models from different algorithms exhibit varying performance results. Overall, the study show that the Random Forest algorithm outperforms the others algorithms, achieving higher values across the explored metrics: recall, precision, \fone, and Area Under the Curve (AUC).
+\begin{itemize}
+ \item Logistic Regression 
+ \item Linear Discriminant Analysis (LDA)
+ \item Quadratic Discriminant Analysis (QDA)
+ \item Random Forest
+\end{itemize}
+
+We also explored the Energy-Based Flow Classifier (EFC), which has been used for
+intrusion and botnet detection using network flows~\cite{DBLP:journals/tnsm/PontesSGBM21}.
+We experimented with multiple parameters and used cross-validation to maximize the performance of
+these ML algorithms. In the end, the Random Forest algorithm outperformed the others,
+when considering standard metrics (recall, precision, \fone, and Area Under the Curve (AUC)).
+Table~\ref{tab:ml-metrics} presents the results. Based on this result,
+we explored the research questions using the outputs of the Random Forest
+classification.
+
+\begin{table}[htb]
+    \caption{Accuracy of the ML algorithms to classify the app as malware or non-malware using network flow data from the \cds.}
+  \begin{tabular}{lcccc} \toprule
+    Algorithm & Precision & Recall & \fone & AUC \\ \midrule 
+    Logistic Regression  & 0.67 & 0.67 & 0.66 & 0.62 \\
+    LDA & 0.66 & 0.75 & 0.70 & 0.70 \\
+    QDA & 0.63 & 0.68 & 0.65 & 0.68 \\
+    EFC & 0.68 & 0.74 & 0.71 & 0.72 \\
+    Random Forest & 0.84 & 0.81 & 0.82 & 0.92 \\ \bottomrule    
+  \end{tabular}
+  \label{tab:ml-metrics}
+\end{table}
 
 \begin{finding}
   The Random Forest algorithm outperforms the others popular classification algorithms, achieving higher values across the metrics explored (recall, precision, \fone, and Area Under the Curve).
 \end{finding}
 
 
-\begin{figure*}[h]
-  \centering
-  
-    \includegraphics[width=0.85\textwidth]{image/barGraphMetrics.png} \\[\abovecaptionskip]
-    
-  \caption{The comparison of machine learning algorithms}\label{fig:metrics}
-\end{figure*}
+% \begin{figure*}[h]
+%   \centering  
+%     \includegraphics[width=0.85\textwidth]{image/barGraphMetrics.png} \\[\abovecaptionskip]
+%   \caption{The comparison of machine learning algorithms}\label{fig:metrics}
+% \end{figure*}
 
 
-\subsection{Comparison of two detection Strategy}\label{sec:comparison}
+\subsection{Comparison of two detection Strategy}\label{sec:new-mas-approach}
 
 {\bf \mas.} Considering the \cds (4,076 apps), the \fhc present
 a total of {$1,395$} repackaged apps flagged as malware ({$34.22$\%} of the total number of repackaged apps), for which the repackaged app version calls at least one additional sensitive API. They explore accuracy metrics (such as Precision, Recall, and F-measure ($F_1$)), taking advantage of \vt to label the \cds and building a ground truth. Table~\ref{tab:accuracy} summarize the result of their study (First row). The study indicate that the \mas achieves an accuracy of 0.54 when considering the \cds. Nonetheless, the \mas fails to correctly classify $1,720$ assets as malware on the \cds (FN column, first row of Table~\ref{tab:accuracy}), and wrongly labeled the repackaged version of $220$ apps as malware (FP column). Therefore, the study reveals a {\bf lower performance} related to the accuracy of the approach, indicating that when considering the \cds, the accuracy of the \mas using DroidBot as test generate tool is just over $50$\%.

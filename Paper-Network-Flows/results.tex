@@ -16,9 +16,9 @@ the vanilla \mas on the \cds.
 \subsection{Comparison of Machine Learning Algorithms}\label{sec:ml}
 
 
-As discussed {\color{red}in Section~\ref{}}, we extended the \mas{} approach to collect network
+As discussed {\color{red}in Section~\ref{}}, we extended the \mas to collect network
 flow information from the apps during their execution via DroidBot campaigns.
-We then replicated our previous experiments using this extended version of the \mas{} approach
+We then replicated our previous experiments using this extended version of the \mas
 that incorporates network flow data collection. Finally, we conducted an experiment to
 compare the performance of machine learning algorithms leveraging this network flow data
 for malware classification. This step of our research considers the following standard ML algorithms:
@@ -32,8 +32,9 @@ for malware classification. This step of our research considers the following st
 
 We also explored the Energy-Based Flow Classifier (EFC), which has been used for
 intrusion and botnet detection using network flows~\cite{DBLP:journals/tnsm/PontesSGBM21}.
-We experimented with multiple parameters and used cross-validation to maximize the performance of
-these ML algorithms. In the end, the Random Forest algorithm outperformed the others,
+Our experiments were conducted using the \cds, with 70\% of the samples (2853 samples) allocated for training
+and 30\% (1213 samples) for testing. To maximize the performance of these machine learning algorithms,
+we employed multiple parameters and cross-validation. In the end, the Random Forest algorithm outperformed the others,
 when considering standard metrics (recall, precision, \fone, and Area Under the Curve (AUC)).
 Table~\ref{tab:ml-metrics} presents the results. Based on this result,
 we explored the research questions using the outputs of the Random Forest
@@ -64,7 +65,30 @@ classification.
 % \end{figure*}
 
 
-\subsection{Comparison of two detection Strategy}\label{sec:new-mas-approach}
+\subsection{Overall Performance and Ablation Study}\label{sec:new-mas-approach}
+
+Our extended version of the \mas, which complements the \mas with an ML-based network flow classification of Android apps, classified $3,046$ repackaged versions of apps as malware, from wich 334 are false negatives. It also miss classfied 183 apps as non-malware (false negatives). Table~\ref{} presents the confusion matrix.
+
+\begin{tabular}{l|l|c|c|c}
+\multicolumn{2}{c}{}&\multicolumn{2}{c}{Prediction}&\\
+\cline{3-4}
+\multicolumn{2}{c|}{}&Positive&Negative&\multicolumn{1}{c}{Total}\\
+\cline{2-4}
+\multirow{2}{*}{Actual Values}& Positive & $a$ & $b$ & $a+b$\\
+\cline{2-4}
+& Negative & $c$ & $d$ & $c+d$\\
+\cline{2-4}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{$a+c$} & \multicolumn{    1}{c}{$b+d$} & \multicolumn{1}{c}{$N$}\\
+\end{tabular}
+
+and significantly decreased the number of (FN) from $1,720$ to $183$. However, this execution increased the number of (FP) from $220$ to $334$. The combination of both techniques proved to be more effective than the vanilla \mas. In summary, the results reveal that the combination of both techniques achieves an accuracy rate of $91$\% (third row of Table~\ref{tab:accuracy}).
+
+To understand the benefits of each method, we further analyze the contribution of them for the accuracy. We report the raise of True Positive (TP) and False Positive (FP) for each technique in Figure~\ref{fig:venn}. The figure reveal that different approaches present different contribution to the final detection result.
+
+\begin{finding}
+When combining both techniques, we improve the overall accuracy (\fone) of \mas at malware detection, from $0.54$ to $0.91$ at \cds.
+\end{finding}
+
 
 {\bf \mas.} Considering the \cds (4,076 apps), the \fhc present
 a total of {$1,395$} repackaged apps flagged as malware ({$34.22$\%} of the total number of repackaged apps), for which the repackaged app version calls at least one additional sensitive API. They explore accuracy metrics (such as Precision, Recall, and F-measure ($F_1$)), taking advantage of \vt to label the \cds and building a ground truth. Table~\ref{tab:accuracy} summarize the result of their study (First row). The study indicate that the \mas achieves an accuracy of 0.54 when considering the \cds. Nonetheless, the \mas fails to correctly classify $1,720$ assets as malware on the \cds (FN column, first row of Table~\ref{tab:accuracy}), and wrongly labeled the repackaged version of $220$ apps as malware (FP column). Therefore, the study reveals a {\bf lower performance} related to the accuracy of the approach, indicating that when considering the \cds, the accuracy of the \mas using DroidBot as test generate tool is just over $50$\%.
@@ -119,10 +143,6 @@ When combining both techniques, we improve the overall accuracy (\fone) of \mas 
 
   \caption{Contribution to the final detection result}\label{fig:venn}
 \end{figure}
-
-
-
-
 
 
 \subsection{Detection Performance based on Malware Family}\label{sec:family}

@@ -17,7 +17,7 @@ FOREST = pd.read_csv(file_path)
 FINAL_DS_MAS_FLOW = pd.merge(CLEAR, FOREST[['Index','Pred']], left_on='index', right_on='Index', how='left')
 FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.drop(['Index'], axis=1)
 
-FINAL_DS_MAS_FLOW = pd.merge(FINAL_DS_MAS_FLOW, TSE[['sha256','apidetected']], left_on='hash', right_on='sha256', how='left')
+FINAL_DS_MAS_FLOW = pd.merge(FINAL_DS_MAS_FLOW, TSE[['sha256','apidetected']], left_on='hash', right_on='sha256', how='right')
 FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.drop(['sha256'], axis=1)
 FINAL_DS_MAS_FLOW = FINAL_DS_MAS_FLOW.dropna()
 

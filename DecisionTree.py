@@ -8,6 +8,8 @@ from sklearn.ensemble import RandomForestClassifier
 from scipy.stats import randint
 from sklearn.inspection import permutation_importance
 from sklearn.feature_selection import SelectFromModel
+from imblearn.under_sampling import RandomUnderSampler
+from imblearn.over_sampling import SMOTE
 
 import csv
 
@@ -31,7 +33,15 @@ X_train, X_test, y_train, y_test = train_test_split(
 #features without dst_port
 #model = RandomForestClassifier(n_estimators=190, random_state=123, min_samples_split= 4, min_samples_leaf= 7, max_samples= 3274, max_features= 2000, max_depth=10)
 
-model = RandomForestClassifier(n_estimators=400, random_state=123, min_samples_split= 18, min_samples_leaf= 3, max_samples= 3296, max_features= 'log2', max_depth=None)
+rus = RandomUnderSampler(random_state=42)
+X_res, y_res = rus.fit_resample(X_train, y_train)
+
+smote = SMOTE()
+X_resampled, y_resampled = smote.fit_resample(X_train, y_train)
+
+print(y_resampled.value_counts())
+
+model = RandomForestClassifier(n_estimators=400, random_state=123, min_samples_split= 18, min_samples_leaf= 3, max_samples= 1668, max_features= 'log2', max_depth=None)
 
 
 #param_dist = {'n_estimators': randint(50,500),
@@ -50,7 +60,8 @@ model = RandomForestClassifier(n_estimators=400, random_state=123, min_samples_s
 #                                 n_iter=5, 
 #                                 cv=5,verbose=True)
 
-model.fit(X_train, y_train)
+#model.fit(X_train, y_train)
+model.fit(X_resampled,y_resampled)
 
 #rand_search.fit(X_train, y_train)
 

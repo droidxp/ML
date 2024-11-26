@@ -39,9 +39,12 @@ X_res, y_res = rus.fit_resample(X_train, y_train)
 smote = SMOTE()
 X_resampled, y_resampled = smote.fit_resample(X_train, y_train)
 
-print(y_resampled.value_counts())
 
-model = RandomForestClassifier(n_estimators=400, random_state=123, min_samples_split= 18, min_samples_leaf= 3, max_samples= 1668, max_features= 'log2', max_depth=None)
+#print(y_resampled.value_counts())
+
+#model = RandomForestClassifier(n_estimators=190, random_state=123, min_samples_split= 4, min_samples_leaf= 3, max_samples= 2277, max_features= 'sqrt', max_depth=5)
+#model = RandomForestClassifier(n_estimators=230, random_state=123, min_samples_split= 16, min_samples_leaf= 19, max_samples= 2846, max_features= 2000, max_depth=10)
+model = RandomForestClassifier(n_estimators=190, random_state=123, min_samples_split= 18, min_samples_leaf= 3, max_samples= 2846, max_features= 'log2', max_depth=None)
 
 
 #param_dist = {'n_estimators': randint(50,500),
@@ -51,7 +54,7 @@ model = RandomForestClassifier(n_estimators=400, random_state=123, min_samples_s
 #           "min_samples_split": np.arange(2, 20, 2),
 #           "min_samples_leaf": np.arange(1, 20, 2),
 #           "max_features": [1,2000 , "sqrt", "log2"],
-#           "max_samples": [3296]}
+#           "max_samples": [2277]}
 
 #model = RandomForestClassifier(n_jobs=-1, random_state=123)
 
@@ -60,8 +63,8 @@ model = RandomForestClassifier(n_estimators=400, random_state=123, min_samples_s
 #                                 n_iter=5, 
 #                                 cv=5,verbose=True)
 
-#model.fit(X_train, y_train)
-model.fit(X_resampled,y_resampled)
+model.fit(X_train, y_train)
+#model.fit(X_res,y_res)
 
 #rand_search.fit(X_train, y_train)
 
@@ -70,32 +73,34 @@ model.fit(X_resampled,y_resampled)
 #Print the best hyperparameters
 #print('Best hyperparameters:',  rand_search.best_params_)
 
-
 fig, axes = plt.subplots(nrows = 1,ncols = 1,figsize = (4,4), dpi=800)
 tree.plot_tree(model.estimators_[0],
                filled = True);
 fig.savefig('rf_individualtree.png')
 
-#predict = model.predict(X_test).tolist()
+predict = model.predict(X_test).tolist()
 #dict = {'Index': X_test.index , 'Malicious': y_test, 'Pred': predict}  
 
+#predict = model.predict(X_test).tolist()
+#print('Total tested: %0d'%len(predict))
+#print('Total trained: %0d'%len(X_train))
+#print('Total samples: %0d'%len(y_list))
+#print(classification_report(y_test, model.predict(X_test)))
+
+print(confusion_matrix(y_test, model.predict(X_test)))
+print(classification_report(y_test, model.predict(X_test)))
+
+
 predict = model.predict(X).tolist()
-dict = {'Index': X.index , 'Malicious': y, 'Pred': predict} 
+print(classification_report(y, predict))
+print(confusion_matrix(y, predict))
+dict = {'Index': X.index , 'Malicious': y, 'Pred': predict}
        
 # create a Pandas DataFrame from the dictionary
 df = pd.DataFrame(dict) 
     
 # write the DataFrame to a CSV file
 df.to_csv('RandomForest.csv', index=False) 
-
-predict = model.predict(X_test).tolist()
-print('Total tested: %0d'%len(predict))
-print('Total trained: %0d'%len(y_train))
-print('Total samples: %0d'%len(y_list))
-print(classification_report(y_test, model.predict(X_test)))
-print(confusion_matrix(y_test, model.predict(X_test)))
-
-
 
 
 #feature_names = model.feature_names_in_
@@ -111,3 +116,6 @@ print(confusion_matrix(y_test, model.predict(X_test)))
 #importances = result.importances_mean
 #feature_imp_df = pd.DataFrame({'Feature': feature_names, 'Gini Importance': importances}).sort_values('Gini Importance', ascending=False) 
 #print(feature_imp_df[:50])
+
+
+

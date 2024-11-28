@@ -17,7 +17,7 @@ unique_columns = list(unique_columns.columns)
 Malware_cleaned = Malware.drop(unique_columns, axis=1)
 
 #Malware_cleaned = Malware_cleaned.fillna(Malware_cleaned[Malware_cleaned.columns[:5373]].median())
-Malware_cleaned = Malware_cleaned.fillna(0)
+Malware_cleaned = Malware_cleaned.fillna(-10000000000000)
 Malware_cleaned = Malware_cleaned.dropna()
 
 X = Malware_cleaned.drop(['hash','malicious'], axis=1)

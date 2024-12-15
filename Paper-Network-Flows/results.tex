@@ -1,10 +1,22 @@
 \section{Results}\label{sec:results}
 
-This section presents the results of our research. In Section~\ref{sec:ml}, we compare the performance of various machine learning (ML) algorithms in classifying apps from the \fds dataset as either malware or non-malware using our framework, \droidxpflow. In Section~\ref{sec:family-assessment}, we evaluate the performance of our approach, focusing on malware families and assessing the accuracy of detecting each of them. Finally, in Section~\ref{sec:new-mas-approach}, we provide an overview of the results obtained with our approach and compare them to existing state-of-the-art method.
+% <<<<<<< HEAD
+% This section presents the results of our research. In Section~\ref{sec:ml}, we compare the performance of various machine learning (ML) algorithms in classifying apps from the \fds dataset as either malware or non-malware using our framework, \droidxpflow. In Section~\ref{sec:family-assessment}, we evaluate the performance of our approach, focusing on malware families and assessing the accuracy of detecting each of them. Finally, in Section~\ref{sec:new-mas-approach}, we provide an overview of the results obtained with our approach and compare them to existing state-of-the-art method.
+% =======
+This section presents the results of our research. In Section~\ref{sec:ml}, we compare the
+performance of machine learning algorithms in classifying as malware or non-malware the
+repackaged version of the apps in the \cds dataset, using the network flow data we
+collected during the execution of the apps. Recall that previous research employed the \emph{vanilla}
+\mas, which relies solely on calls to sensitive APIs for app classification. Our previous
+research showed that the performance of the vanilla \mas is compromised when considering
+the \cds, in particular due to samples from specific malware families {\color{red}(such as ABC)~\cite{}}.
+In Section~\ref{sec:new-mas-approach}, we present the gains in classification performance of our extended \mas,
+which combines the analysis of sensitive API calls with our designed network flow ML-based classification method.
+Finally, in Section~\ref{sec:family-assessment}, we present assessments of our extended
+version of the \mas that focus on the malware families responsible for the poor performance of
+the vanilla \mas on the \cds.
 
-
-
-\subsection{Comparison of ML Algorithms}\label{sec:ml}
+\subsection{Comparison of Machine Learning Algorithms}\label{sec:ml}
 
 As discussed in Section~\ref{sec:dataset}, we developed a framework (\droidxpflow), extending DroidXP benchmark to collect network flow information from apps during their execution via DroidBot campaigns. We then conducted our experiment using \droidxpflow, which incorporates network flow data analysis and ML algorithms.
 

@@ -1,4 +1,4 @@
-\section{Results}\label{sec:results}
+\subsection{Results}\label{sec:results}
 
 % <<<<<<< HEAD
 % This section presents the results of our research. In Section~\ref{sec:ml}, we compare the performance of various machine learning (ML) algorithms in classifying apps from the \fds dataset as either malware or non-malware using our framework, \droidxpflow. In Section~\ref{sec:family-assessment}, we evaluate the performance of our approach, focusing on malware families and assessing the accuracy of detecting each of them. Finally, in Section~\ref{sec:new-mas-approach}, we provide an overview of the results obtained with our approach and compare them to existing state-of-the-art method.
@@ -16,7 +16,7 @@ Finally, in Section~\ref{sec:family-assessment}, we present assessments of our e
 version of the \mas that focus on the malware families responsible for the poor performance of
 the vanilla \mas on the \cds.
 
-\subsection{Comparison of Machine Learning Algorithms}\label{sec:ml}
+\subsubsection{Comparison of Machine Learning Algorithms}\label{sec:ml}
 
 As discussed in Section~\ref{sec:dataset}, we developed a framework (\droidxpflow), extending DroidXP benchmark to collect network flow information from apps during their execution via DroidBot campaigns. We then conducted our experiment using \droidxpflow, which incorporates network flow data analysis and ML algorithms.
 
@@ -59,7 +59,7 @@ Ultimately, the RF algorithm outperformed the others when evaluated with standar
 %   \caption{The comparison of machine learning algorithms}\label{fig:metrics}
 % \end{figure*}
 
-\subsection{Detection Performance based on Malware Family}\label{sec:family-assessment}
+\subsubsection{Detection Performance based on Malware Family}\label{sec:family-assessment}
 
 In this section, we present the performance of our experiment based on malware family. Since the number of samples in each family varies, the overall detection rate is more influenced by families with larger sample sizes. However, our results become inconsistent if we use the same number of samples for each family. To resolve this issue, we present the results based on the actual number of samples from the $20$ most representative families, which account for $90.9\%$ of all malware samples tested and whose families could be labeled by \vt.
 

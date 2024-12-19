@@ -3,24 +3,30 @@
 % <<<<<<< HEAD
 % This section presents the results of our research. In Section~\ref{sec:ml}, we compare the performance of various machine learning (ML) algorithms in classifying apps from the \fds dataset as either malware or non-malware using our framework, \droidxpflow. In Section~\ref{sec:family-assessment}, we evaluate the performance of our approach, focusing on malware families and assessing the accuracy of detecting each of them. Finally, in Section~\ref{sec:new-mas-approach}, we provide an overview of the results obtained with our approach and compare them to existing state-of-the-art method.
 % =======
-This section presents the results of our research. In Section~\ref{sec:ml}, we compare the
-performance of machine learning algorithms in classifying as malware or non-malware the
-repackaged version of the apps in the \cds dataset, using the network flow data we
-collected during the execution of the apps. Recall that previous research employed the \emph{vanilla}
+
+
+
+In this section we present the results of our research.
+First we compare the performance of different ML algorithms in classifying
+as malware or non-malware the repackaged version of the apps in the \fds (Section~\ref{sec:ml}) we
+built using \droidxpflow.
+Recall that previous research employed the \emph{vanilla}
 \mas, which relies solely on calls to sensitive APIs for app classification. Our previous
 research showed that the performance of the vanilla \mas is compromised when considering
-the \cds, in particular due to samples from specific malware families {\color{red}(such as ABC)~\cite{}}.
-In Section~\ref{sec:new-mas-approach}, we present the gains in classification performance of our extended \mas,
-which combines the analysis of sensitive API calls with our designed network flow ML-based classification method.
-Finally, in Section~\ref{sec:family-assessment}, we present assessments of our extended
-version of the \mas that focus on the malware families responsible for the poor performance of
-the vanilla \mas on the \cds.
+the \cds, in particular due to samples from specific malware families (i.e., \gps, \rmb, \dwg, and \tjk families).
+In Section~\ref{sec:new-mas-approach}, we present the gains in classification performance when combining
+the \mas with \droidxpflow; while, in Section~\ref{sec:family-assessment}, we show to which extent
+\droidxpflow correctly clasifies the malware families for which the \mas approach
+present the worst accuracy in our previous study.
 
 \subsubsection{Comparison of Machine Learning Algorithms}\label{sec:ml}
 
-As discussed in Section~\ref{sec:dataset}, we developed a framework (\droidxpflow), extending DroidXP benchmark to collect network flow information from apps during their execution via DroidBot campaigns. We then conducted our experiment using \droidxpflow, which incorporates network flow data analysis and ML algorithms.
+As discussed in Section~\ref{sec:droidxp}, \droidxpflow extends \droidxp to collect network
+flow information from apps during test case generation campaigns. To answer our fitst research question,
+we conduct an experiment that compares the performance of various ML algorithms using our \fds dataset
+for malware classification. This stage of our research considers the following ML algorithms:
 
-As a first step, we conducted an experiment to compare the performance of various ML algorithms using our \fds dataset for malware classification. This stage of our research considered the following standard ML algorithms:
+\rb{Seria legal justificarmos o poru\^{e} da escolha desses algoritmos, e nao de outros (como SVM). Talvez o Prof. Eduardo possa ajudar aqui.}
 
 \begin{itemize}
  \item Logistic Regression (LR)
@@ -29,28 +35,34 @@ As a first step, we conducted an experiment to compare the performance of variou
  \item Random Forest (RF)
 \end{itemize}
 
-We also explored the Energy-Based Flow Classifier (EFC), which has been used for intrusion and botnet detection using network flows~\cite{DBLP:journals/tnsm/PontesSGBM21}. For our experiments with \fds, $70\%$ of the samples ($2,847$) were allocated for training, and $30\%$ ($1,220$ samples) for testing. To maximize the performance of each ML algorithm, we explored multiple parameter configurations, using cross-validation, to making efficient use of the available features for each ML algorithm.
+\rb{As configuracoes dos parametros que foram explorados deveriam estar descritas nas secoes anteriores; antes de results.}
 
-Ultimately, the RF algorithm outperformed the others when evaluated with standard metrics (recall, precision, F1-score, and Area Under the Curve (AUC)). Table~\ref{tab:ml-metrics} presents the results. Thus, based on these findings, we answer the research questions using the outputs of the RF algorithm classification.
-
-
+In this research we also explore the Energy-Based Flow Classifier (EFC), which has been used for intrusion and botnet detection using
+network flows~\cite{DBLP:journals/tnsm/PontesSGBM21}. For our experiments using the \fds, we separate $70\%$ of the samples ($2,847$) for
+training, and $30\%$ ($1,220$ samples) for testing. To maximize the performance of each ML algorithm, we explored multiple parameter configurations, using cross-validation, to making efficient use of the available features for each ML algorithm.
+Ultimately, the RF algorithm outperformed the others when evaluated with standard metrics (recall, precision, F1-score, and Area Under the Curve (AUC)).
+Table~\ref{tab:ml-metrics} presents the results. 
 
 \begin{table}[htb]
     \caption{Accuracy of the ML algorithms to classify the app as malware or non-malware using network flow data from the \fds.}
-  \begin{tabular}{lcccc} \toprule
+\centering{
+    \begin{tabular}{lrrrr} \toprule
     Algorithm & Precision & Recall & \fone & AUC \\ \midrule 
     LR  & 0.74 & 0.98 & 0.84 & 0.74 \\
     LDA & 0.74 & 0.97 & 0.84 & 0.84 \\
     QDA & 0.72 & 0.66 & 0.69 & 0.76 \\
     EFC & 0.75 & 0.97 & 0.85 & 0.66 \\
     RF & 0.87 & 0.90 & 0.89 & 0.94 \\ \bottomrule    
-  \end{tabular}
-  \label{tab:ml-metrics}
+    \end{tabular}
+} \label{tab:ml-metrics}
 \end{table}
 
 \begin{finding}
   The RF algorithm outperforms the others popular classification algorithms, achieving higher values across the metrics explored (recall, precision, \fone, and Area Under the Curve).
 \end{finding}
+
+In what follows, when we present the accuracy of \droidxpflow, we
+will be describing its usage with the Random Forest algotithm.
 
 
 % \begin{figure*}[h]
@@ -58,6 +70,59 @@ Ultimately, the RF algorithm outperformed the others when evaluated with standar
 %     \includegraphics[width=0.85\textwidth]{image/barGraphMetrics.png} \\[\abovecaptionskip]
 %   \caption{The comparison of machine learning algorithms}\label{fig:metrics}
 % \end{figure*}
+
+\subsubsection{A comparison between \droidxpflow and the \mas}
+
+Here we compare the accuracy performance of \droidxpflow and the \mas classifiers.
+Our comparison here also relies on standard metrics
+(recall, precision, and F1-score), and we present the results using the
+same $30\%$ of samples (1,220) from the \fds dataset that we used for the tests
+in Section~\ref{sec:ml}.
+Our results show that the vanilla \mas for malware classification has lower accuracy (\fone) compared to the \droidxpflow framework.
+That is, the \mas achieves an \fone of $59\%$, while the \droidxpflow achieves an \fone of $89\%$.
+
+
+In more details, considering the 1,220 apps in the testing sample ($30\%$ of the \fds),
+the \mas classified a total of 460 repackaged apps as malware ($37.7\%$ of the total number of repackaged apps in the
+testing sample), where the repackaged app version calls at least one additional sensitive API.
+Table~\ref{tab:accuracy} summarizes the results of the study (first row).
+
+Note that the \mas fails to correctly classify 488 assets as malware (FN column, first row of Table~\ref{tab:accuracy})
+and wrongly labels the repackaged version of $64$ apps as malware (FP column). This
+leads to a poor performance in terms of accuracy, indicating that when considering the \fds testing sample,
+the accuracy of the \mas using DroidBot as the test generation tool is $59\%$.
+
+Contrasting, \droidxpflow classifieda total of 903 apps as malware, but failed to correctly label 86 assets as malware (FNs).
+In addition, \droidxpflow wrongly labeled (FPs) the repackaged versions of 116 samples as malware
+(second row of Table~\ref{tab:accuracy}). \droidxpflow led to a better performance compared to the \mas,
+with an accuracy of $89\%$. Based on these results, we can conclude that \droidxpflow outperforms the \mas, proving to be an effective
+strategy for malware classification. 
+
+\begin{finding}
+  The experimental results show that \droidxpflow outperforms the \mas, with \fone of $0.89$. This proves that the
+  approach is an effective strategy for malware classification.
+\end{finding}
+
+
+\begin{table*}
+  \caption{Accuracy of both strategy on \fds (1220 samples).}
+\centering{
+  \begin{tabular}{lrrrrrr} \hline
+    Approach & TP   & FP  & FN  & Precision & Recall & $F_1$ \\
+    \hline
+    \mas   & 396  & 64 & 488 & 0.86       & 0.45   & 0.59  \\
+    Flow Analysis with ML support (RF)    & 787   & 116   & 86   & 0.87      & 0.90   & 0.89  \\
+    
+    \hline
+  \end{tabular}
+  }
+  \label{tab:accuracy}
+\end{table*}
+
+
+\rb{Aqui seria legal apresentar se as duas abordagens levam a uma acuracia melhor que
+  \droidxpflow sozinha}
+
 
 \subsubsection{Detection Performance based on Malware Family}\label{sec:family-assessment}
 
@@ -135,45 +200,6 @@ Even for recently malicious apps without family classification, our approach can
 
 \subsection{Flow Analysis approach x Mining Android Sandbox (MAS) approach}\label{sec:new-mas-approach}
 
-
-In this section, we compare the performance of \droidxpflow and \mas classifier, presented in the previous chapter of this thesis. The comparison is performed based on standard metrics (recall, precision, F1-score). To provide a baseline comparison, we present the results of the \mas using the same $30\%$ of samples ($1,220$) from the \fds dataset tested in section~\ref{sec:ml}.
-
-Our results demonstrate that the vanilla \mas for malware classification has lower performance (\fone) compared to the \droidxpflow framework. In summary, the results reveal that the \mas achieves an \fone of $59\%$, while the \droidxpflow achieves an overall accuracy of $89\%$.
-
-To understand the strengths and weaknesses of each method, we further analyzed their contributions to the \fds dataset. We report the increase in True Positives (TP) and False Positives (FP) for each technique in Figure~\ref{fig:venn}. The figure shows that different approaches contribute differently to the final detection results. More details are provided in the following subsection.
-
-
-\subsubsection{\mas result} 
-
-Considering $30\%$ of the \fds (1,220 apps), the \mas flagged a total of $460$ repackaged apps as malware ($37.7\%$ of the total number of repackaged apps investigated), where the repackaged app version calls at least one additional sensitive API. We explored accuracy metrics (such as Precision, Recall, and F-measure (F1)), taking advantage of \vt to label the \fds and build a ground truth. Table~\ref{tab:accuracy} summarizes the results of the study (first row).
-
-The results indicate that the \mas achieves an accuracy of $0.59$ when considering the $1,220$ apps explored. Nonetheless, the \mas fails to correctly classify $488$ assets as malware (FN column, first row of Table~\ref{tab:accuracy}) and wrongly labels the repackaged version of $64$ apps as malware (FP column). Therefore, the study reveals a lower performance in terms of accuracy, indicating that when considering $30\%$ of the \fds, the accuracy of the \mas using DroidBot as the test generation tool is nearly $60\%$.
-
-
-\subsubsection{Flow Analysis result} 
-
-Surprisingly, considering the same samples ($1,220$ apps), we explored our framework. The \droidxpflow labeled a total of $903$ apps as malware but failed to correctly label $86$ assets as malware. However, it wrongly labeled the repackaged versions of $116$ samples as malware (second row of Table~\ref{tab:accuracy}). Our \droidxpflow framework showed better performance compared to the \mas, with an accuracy rate of $89\%$. Based on these results, we can conclude that \droidxpflow outperforms the \mas, proving to be an effective strategy for malware classification. In the next section, we present the strengths and weaknesses of each proposal.
-
-
-\begin{finding}
-The experimental results demonstrate that \droidxpflow framework, outperforms the \mas, with \fone of $0.89$. This proves that the approach is an effective strategy for malware identification.
-\end{finding}
-
-
-\begin{table*}
-  \caption{Accuracy of both strategy on \fds (1220 samples).}
-\centering{
-  \begin{tabular}{lrrrrrr} \hline
-    Approach & TP   & FP  & FN  & Precision & Recall & $F_1$ \\
-    \hline
-    \mas   & 396  & 64 & 488 & 0.86       & 0.45   & 0.59  \\
-    Flow Analysis with ML support (RF)    & 787   & 116   & 86   & 0.87      & 0.90   & 0.89  \\
-    
-    \hline
-  \end{tabular}
-  }
-  \label{tab:accuracy}
-\end{table*}
 
 
 \subsection{Weakness and Strength of \net and \mas}\label{sec:strategy}

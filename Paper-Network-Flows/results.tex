@@ -16,36 +16,26 @@ the \cds, in particular due to samples from specific malware families (i.e., \gp
 In Section~\ref{sec:comparation}, we present the gains in classification performance when combining
 the \mas with \droidxpflow; while, in Section~\ref{sec:family-assessment}, we show to which extent
 \droidxpflow correctly clasifies the malware families for which the \mas approach
-present the worst accuracy in our previous study.
+present the worst performance in our previous study.
 
 \subsubsection{Comparison of Machine Learning Algorithms}\label{sec:ml}
 
 As discussed in Section~\ref{sec:droidxpflow}, \droidxpflow extends \droidxp to collect network
-flow information from apps during test case generation campaigns. To answer our fitst research question,
-we conduct an experiment that compares the performance of various ML algorithms using our \fds dataset with all the features (1,640)
-for malware classification. This stage of our research considers the following ML algorithms:
+flow information from apps during test case generation campaigns. To answer our first research question,
+we conduct an experiment that compares the performance of various ML algorithms using our \fds dataset. For the experiment, we use all the features (1,640) from \fds, and also evaluated the algorithms using the default parameter values for each methods. This stage of our research we considers several learning methods, including Logistic Regression (LR), Linear Discriminant Analysis (LDA), Quadratic Discriminant Analysis (QDA) and Random Forest (RF). In this research we also explore the Energy-Based Flow Classifier (EFC), which has been used for intrusion and botnet detection using network flows~\cite{DBLP:journals/tnsm/PontesSGBM21}. These algorithms were chosen for their popularity, the availability of libraries, and their ease of implementation in \textit{Python} language.
 
-\rb{Seria legal justificarmos o poru\^{e} da escolha desses algoritmos, e nao de outros (como SVM). Talvez o Prof. Eduardo possa ajudar aqui.}
 
-\begin{itemize}
- \item Logistic Regression (LR)
- \item Linear Discriminant Analysis (LDA)
- \item Quadratic Discriminant Analysis (QDA)
- \item Random Forest (RF)
-\end{itemize}
 
-\rb{As configuracoes dos parametros que foram explorados deveriam estar descritas nas secoes anteriores; antes de results.}
+%\rb{As configuracoes dos parametros que foram explorados deveriam estar descritas nas secoes anteriores; antes de results.}
 
-In this research we also explore the Energy-Based Flow Classifier (EFC), which has been used for intrusion and botnet detection using
-network flows~\cite{DBLP:journals/tnsm/PontesSGBM21}. For our experiments using the \fds, we separate $70\%$ of the samples ($2,847$) for
-training, and $30\%$ ($1,220$ samples) for testing. To equalize the performance of each ML algorithm, we evaluated them using the default parameter values for each method.
-Ultimately, the RF algorithm outperformed the others when evaluated with standard metrics (recall, precision, F1-score, and Area Under the Curve (AUC)). RF algorithm aggregates multiple decision trees,
+
+As described at Section~\ref{sec:training}, for our experiments we separate $2,847$ samples for training ($70$\%), and $1,220$ samples for testing ($30$\%), using the default parameter values for each method explored. Ultimately, the RF algorithm outperformed the others when evaluated with standard metrics (recall, precision, F1-score, and Area Under the Curve (AUC)). RF algorithm aggregates multiple decision trees,
 with each tree constructed using a random subset of features. This process decorrelates the trees, allowing for a more thorough
 exploration of the model and substantially improving predictive performance~\cite{james2023introduction}.
 Table~\ref{tab:ml-metrics} presents the results. 
 
 \begin{table}[htb]
-    \caption{Accuracy of the ML algorithms to classify the app as malware or non-malware using network flow data from the \fds.}
+    \caption{Performance of the ML algorithms to classify the app as malware or non-malware using network flow data from the \fds.}
 \centering{
     \begin{tabular}{lrrrr} \toprule
     Algorithm & Precision & Recall & \fone & AUC \\ \midrule 
@@ -63,7 +53,7 @@ Table~\ref{tab:ml-metrics} presents the results.
 \end{finding}
 
 In what follows, when we present the accuracy of \droidxpflow, we
-will be describing its usage with the Random Forest algotithm.
+will be describing its usage with the Random Forest algotithm. After selecting the model (RF), we further refine it to achieve the best possible results. The results presented are based on the model's optimal configuration, which is discussed in more detail in the following section.
 
 
 % \begin{figure*}[h]
@@ -74,11 +64,11 @@ will be describing its usage with the Random Forest algotithm.
 
 \subsubsection{A comparison between \droidxpflow and the \mas}\label{sec:comparation}
 
-Here we compare the accuracy performance of \droidxpflow and the \mas classifiers.
+Here we compare the performance of \droidxpflow and the \mas on malware classification
 Our comparison here also relies on standard metrics
 (recall, precision, and F1-score), and we present the results using the
 same $30\%$ of samples (1,220) from the \fds dataset that we used for the tests
-in Section~\ref{sec:ml}. However, this time we used the parameters suggested for RF algorithm, by the cross-validation technique, as described at Section~\ref{sec:training}. With the parameters suggested (Table~\ref{tab:parameter}), we also selected the 20 most relevant features based on Gini Importance, or Mean Decrease in Impurity (MDI)~\cite{james2023introduction}. With this procedure, we reduce training time by disregarding features that contribute little to the model, while at the same time improve the model accuracy in $7\%$. In the end, our final \fds have the follow selected features listed in Table~\ref{tab:features}.
+in Section~\ref{sec:ml}. However, this time we used the parameters suggested for RF algorithm, by the cross-validation technique, as described at Section~\ref{sec:training}. With the parameters suggested (Table~\ref{tab:parameter}), we also selected the 20 most relevant features based on Gini Importance, or Mean Decrease in Impurity (MDI)~\cite{james2023introduction}. With this procedure, we reduce training time by disregarding features that contribute little to the model, while at the same time improve the model accuracy in $7\%$. In the end, our final \fds have the following selected features listed in Table~\ref{tab:features}.
 
 
 \begin{table*}[ht]
@@ -105,7 +95,7 @@ in Section~\ref{sec:ml}. However, this time we used the parameters suggested for
 
 
 \begin{table*}[ht]
-  \caption{THE 20 MOST RELEVANT FEATURES.}
+  \caption{The 20 Most Relevant Features for RF algorithm.}
   \centering
   \begin{small}
     \begin{tabular}{rrlrrr}   \hline

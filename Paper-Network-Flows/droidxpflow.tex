@@ -22,8 +22,8 @@ feature extraction (see Figure~\ref{fig:arq}).
 
 \subsection{Data Collection}
 
-The DroidXP~\cite{DBLP:conf/scam/CostaMCMVBC20} tool was initially designed to compare test case generation tools in terms of identifying malicious app behaviors using the \mas. This makes it a relevant tool forautomating data collection using dynamic analysis. For our study, we extended the original version of \droidxp by adding new features to its execution phase. This extension (\droidxpflow) now uses the TcpDump tool
-to collect both inbound and outbound network traffic. The \droidxpflow extension allow us to capture data for network traffic in the PCAP format~\cite{DBLP:conf/iv/UhlarHR21}.
+The DroidXP~\cite{DBLP:conf/scam/CostaMCMVBC20} tool was initially designed to compare test case generation tools in terms of identifying malicious app behaviors using the \mas. This makes it a relevant tool for automating data collection using dynamic analysis. For our study, we extended the original version of \droidxp by adding new features to its execution phase. This extension (\droidxpflow) now uses the TcpDump tool
+to collect both inbound and outbound network traffic. The \droidxpflow extension allows us to capture data for network traffic in the PCAP format~\cite{DBLP:conf/iv/UhlarHR21}.
 A PCAP file contains copies of network packets, enabling dynamic analysis of both payloads and packet headers~\cite{DBLP:conf/iv/UhlarHR21}. Since storing
 and processing PCAP files is a resource-intensive process, \droidxpflow only performs an analysis of network flow segments, rather than analyzing all data available in the PCAP
 files. As such, we pre-process the PCAP files to extract the most relevant features for our study, using the CICflowMeter tool~\cite{DBLP:conf/icissp/LashkariDMG17} software,
@@ -75,7 +75,7 @@ relevant destination ports identified in our analysis. These ports account for $
 
 \begin{table}[h]
 \centering
-\caption{The six most relevant destination ports in our study.}
+\caption{The three most relevant destination ports in our study.}
 \begin{small}
 \begin{tabular}{rlrl} 
 \hline

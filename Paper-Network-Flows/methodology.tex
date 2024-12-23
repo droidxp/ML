@@ -41,12 +41,12 @@ false positives, and false negatives as follows:
    
 \item {\bf False Positive (FP)}. \droidxpflow classifies a repackaged version as a malware and, according to \vt, at most one \se labels the asset as a malware.
 
-\item {\bf False Negative (FN)}. \droidxpflow classifies a repackaged version as a malware, and according to \vt, at least two \ses label the asset as a malware.
+\item {\bf False Negative (FN)}. \droidxpflow do not classifies a repackaged version as a malware, and according to \vt, at least two \ses label the asset as a malware.
 \end{itemize}
 
-We compute \emph{Precision}, \emph{Recall}, and \emph{F-measure} ($F_1$) from
-the number of TP, FP, and FN (using standard formulae). We use basic statistics (average, median, standard deviation) to identify the accuracy of the \ml
-for malware classification at each model explored on our dataset.
+%We compute \emph{Precision}, \emph{Recall}, and \emph{F-measure} ($F_1$) from
+%the number of TP, FP, and FN (using standard formulae). We use basic statistics (average, median, standard deviation) to identify the accuracy of the \ml
+%for malware classification at each model explored on our dataset.
 
 
 \subsection{Dataset}\label{sec:dataset}
@@ -99,11 +99,11 @@ We compare the performance of the following ML algorithms:
 \end{itemize}
 
 
-\rb{Revisar bem o pr\'{o}ximo par\'{a}grafo, talvez incluindo o Prof. Fabiano e o Prof. Eduardo nesse processo.}
+%\rb{Revisar bem o pr\'{o}ximo par\'{a}grafo, talvez incluindo o Prof. Fabiano e o Prof. Eduardo nesse processo.}
 
 To achieve the best-fitting models, we also varied several model parameters using cross-validation~\cite{DBLP:phd/us/Stephenson22} on the training data.
 Cross-validation is a technique commonly used in ML to assess how well a model performs on an independent dataset~\cite{DBLP:journals/jsan/AwadF23}.
-This technique tests the model on different subsets of the data, helping to detect overfitting and making efficient use of the available data.
+This technique tests the model on different subsets of the data, helping to detect overfitting and making efficient use of the available data. We applied the technique in a second stage, after selecting the best model by comparing their performances using the default parameter values of each algorithm, as present at next section (Section~\ref{sec:results}).
 
 
 

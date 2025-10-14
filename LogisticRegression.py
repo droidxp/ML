@@ -4,12 +4,14 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
-
 from sklearn.metrics import precision_recall_curve
 from sklearn.metrics import f1_score
 from sklearn.metrics import auc
 from imblearn.under_sampling import RandomUnderSampler
 from imblearn.over_sampling import SMOTE
+from sklearn.model_selection import train_test_split,RandomizedSearchCV
+from scipy.stats import uniform
+
 
 import csv
 
@@ -27,29 +29,11 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 
-rus = RandomUnderSampler(random_state=42)
-X_res, y_res = rus.fit_resample(X_train, y_train)
+#all features
+model = LogisticRegression(C=0.00010714932985218937, solver='liblinear', max_iter=100, penalty= 'l1')
 
-smote = SMOTE()
-X_resampled, y_resampled = smote.fit_resample(X_train, y_train)
-
-
-
-print(y_resampled.value_counts())
-
-model = LogisticRegression(solver='liblinear', random_state=0, max_iter=100000)
 model.fit(X_train, y_train)
-#model.fit(X_resampled,y_resampled)
 
-importance = model.coef_[0]
-#summarize feature importance
-#for i,v in enumerate(importance):
-#	print('Feature: %0d, Score: %.5f' % (i,v))
-
-predict = model.predict(X_test).tolist()
-print('Total tested: %0d'%len(predict))
-print('Total trained: %0d'%len(y_train))
-print('Total samples: %0d'%len(y_list))
 
 
 # predict probabilities
@@ -64,15 +48,12 @@ lr_f1, lr_auc = f1_score(y_test, yhat), auc(lr_recall, lr_precision)
 print('Logistic: f1=%.3f auc=%.3f' % (lr_f1, lr_auc))
 
 
+predict = model.predict(X_test).tolist()
 
-predict = model.predict(X).tolist()
-print(classification_report(y, predict))
-print(confusion_matrix(y, predict))
-dict = {'Index': X.index , 'Malicious': y, 'Pred': predict}
+dict = {'Index': X_test.index , 'Malicious': y_test, 'Pred': predict}
        
 # create a Pandas DataFrame from the dictionary
 df = pd.DataFrame(dict) 
-    
 # write the DataFrame to a CSV file
 df.to_csv('LogisticRegression.csv', index=False) 
 

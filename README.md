@@ -20,8 +20,8 @@ After the exploratory step, we combined the initial 76 features (excluding Desti
 
 With this [dataset](https://github.com/droidxp/ML/blob/master/clearFile.py), we used various Python scripts to compute the metrics for different machine learning models, such as: Precision, recall, F1-score and AUC (Area Under Curve). Each script generated a respective CSV file containing the model predictions, as presented below:
 
-+ [Random Forest](https://github.com/droidxp/ML/blob/master/DecisionTree.py). [CSV](https://github.com/droidxp/ML/blob/master/RandomForest.csv) file.
-+ [Logistic Regression](https://github.com/droidxp/ML/blob/master/LogisticRegression.py). [CSV](https://github.com/droidxp/ML/blob/master/LogisticRegression.csv) file.
++ Random Forest - [RF](https://github.com/droidxp/ML/blob/master/DecisionTree.py). [CSV](https://github.com/droidxp/ML/blob/master/RandomForest.csv) file.
++ Logistic Regrresion - [LR](https://github.com/droidxp/ML/blob/master/LogisticRegression.py). [CSV](https://github.com/droidxp/ML/blob/master/LogisticRegression.csv) file.
 + Liner Discriminant Analysis - [LDA](https://github.com/droidxp/ML/blob/master/Lda.py). [CSV](https://github.com/droidxp/ML/blob/master/Lda.csv) file.
 + Quadratic Discriminant Analysis - [QDA](https://github.com/droidxp/ML/blob/master/Qda.py). [CSV](https://github.com/droidxp/ML/blob/master/Qda.csv) file.
 + Multi-layer Perceptron - [MLP](https://github.com/droidxp/ML/blob/master/Mlp.py). [CSV](https://github.com/droidxp/ML/blob/master/mlp.csv) file.

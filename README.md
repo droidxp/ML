@@ -26,3 +26,5 @@ With this [dataset](https://github.com/droidxp/ML/blob/master/clearFile.py), we 
 + Quadratic Discriminant Analysis - [QDA](https://github.com/droidxp/ML/blob/master/Qda.py). [CSV](https://github.com/droidxp/ML/blob/master/Qda.csv) file.
 + Multi-layer Perceptron - [MLP](https://github.com/droidxp/ML/blob/master/Mlp.py). [CSV](https://github.com/droidxp/ML/blob/master/mlp.csv) file.
 + Support Vector Machines - [SVM](https://github.com/droidxp/ML/blob/master/Svm.py). [CSV](https://github.com/droidxp/ML/blob/master/svm.csv) file.
+
+The following Python [code](https://github.com/droidxp/ML/blob/master/allAlgorithms.py) prints the comparison of all algorithms.

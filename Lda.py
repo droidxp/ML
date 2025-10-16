@@ -31,9 +31,10 @@ X_res, y_res = rus.fit_resample(X_train, y_train)
 
 smote = SMOTE()
 X_resampled, y_resampled = smote.fit_resample(X_train, y_train)
-print(y_resampled.value_counts())
 
-model = LDA(store_covariance=True)
+
+model = LDA(tol=0.0001,solver='eigen',shrinkage=0.5540245860141142)
+
 
 model.fit(X_train, y_train)
 #model.fit(X_resampled,y_resampled)
@@ -51,25 +52,12 @@ lr_f1, lr_auc = f1_score(y_test, yhat), auc(lr_recall, lr_precision)
 print('Logistic: f1=%.3f auc=%.3f' % (lr_f1, lr_auc))
 
 
+predict = model.predict(X_test).tolist()
 
-#predict = model.predict(X).tolist()
-
-#dict = {'Repack': y_list, 'Hash': z_list, 'Pred': predict}  
+dict = {'Index': X_test.index , 'Malicious': y_test, 'Pred': predict}
        
 # create a Pandas DataFrame from the dictionary
-#df = pd.DataFrame(dict) 
-    
-# write the DataFrame to a CSV file
-#df.to_csv('Lda.csv') 
-
-predict = model.predict(X).tolist()
-print(classification_report(y, predict))
-print(confusion_matrix(y, predict))
-dict = {'Index': X.index , 'Malicious': y, 'Pred': predict}
-
-
 df = pd.DataFrame(dict) 
-    
 # write the DataFrame to a CSV file
 df.to_csv('Lda.csv', index=False) 
 

@@ -36,8 +36,7 @@ mlp_classifier = MLPClassifier(
     max_iter=1000,               # Maximum number of iterations
     random_state=42
 )
-#mlp_classifier = MLPClassifier(activation='logistic',alpha=0.030187830981676968,batch_size=122,hidden_layer_sizes= (100,50),
-#                               learning_rate='constant',learning_rate_init=0.027678101427528502, solver='sgd')
+
 
 # Train the classifier
 mlp_classifier.fit(X_train, y_train)
@@ -49,11 +48,6 @@ y_pred = mlp_classifier.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy:.2f}")
 
-# Print a detailed classification report
-print("\nClassification Report:")
-print(classification_report(y_test, mlp_classifier.predict(X_test)))
-print(confusion_matrix(y_test, mlp_classifier.predict(X_test)))
-
 # predict probabilities
 lr_probs = mlp_classifier.predict_proba(X_test)
 # keep probabilities for the positive outcome only
@@ -64,3 +58,16 @@ lr_precision, lr_recall, _ = precision_recall_curve(y_test, lr_probs)
 lr_f1, lr_auc = f1_score(y_test, yhat), auc(lr_recall, lr_precision)
 # summarize scores
 print('Logistic: f1=%.3f auc=%.3f' % (lr_f1, lr_auc))
+
+predict = mlp_classifier.predict(X_test).tolist()
+
+dict = {'Malicious': y_test, 'Pred': predict}
+       
+# create a Pandas DataFrame from the dictionary
+df = pd.DataFrame(dict) 
+# write the DataFrame to a CSV file
+df.to_csv('Mlp.csv', index=True)
+
+
+print(classification_report(y_test, mlp_classifier.predict(X_test)))
+print(confusion_matrix(y_test, mlp_classifier.predict(X_test)))

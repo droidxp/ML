@@ -37,15 +37,6 @@ svm = SVC(
     probability=True,   # Enable probability estimates
     random_state=42     # Seed for reproducibility
 )
-#svm = SVC(
-#    C=12.34,              # Regularization parameter (smaller values = stronger regularization)
-#    kernel='rbf',       # Kernel type: 'linear', 'poly', 'rbf', 'sigmoid'
-#    gamma=0.56,      # Kernel coefficient: 'scale', 'auto', or a float
-#    degree=3,           # Degree of the polynomial kernel (only for 'poly' kernel)
-#    probability=True,   # Enable probability estimates
-#    random_state=42     # Seed for reproducibility
-#)
-
 
 
 # Train the model on the training data
@@ -69,3 +60,14 @@ lr_precision, lr_recall, _ = precision_recall_curve(y_test, lr_probs)
 lr_f1, lr_auc = f1_score(y_test, yhat), auc(lr_recall, lr_precision)
 # summarize scores
 print('Logistic: f1=%.3f auc=%.3f' % (lr_f1, lr_auc))
+
+predict = svm.predict(X_test).tolist()
+#print(classification_report(y, predict))
+#print(confusion_matrix(y, predict))
+dict = {'Malicious': y_test, 'Pred': predict}
+       
+# create a Pandas DataFrame from the dictionary
+df = pd.DataFrame(dict) 
+    
+# write the DataFrame to a CSV file
+df.to_csv('Svm.csv', index=True)

@@ -32,9 +32,10 @@ smote = SMOTE()
 X_resampled, y_resampled = smote.fit_resample(X_train, y_train)
 print(y_resampled.value_counts())
 
-model = QDA( store_covariance=True)
+
+model = QDA( store_covariance=True,reg_param=0.9997110797761021)
 model.fit(X_train, y_train)
-#model.fit(X_resampled,y_resampled)
+
 
 
 # predict probabilities
@@ -49,16 +50,15 @@ lr_f1, lr_auc = f1_score(y_test, yhat), auc(lr_recall, lr_precision)
 print('Logistic: f1=%.3f auc=%.3f' % (lr_f1, lr_auc))
 
 
-predict = model.predict(X).tolist()
-print(classification_report(y, predict))
-print(confusion_matrix(y, predict))
-dict = {'Index': X.index , 'Malicious': y, 'Pred': predict}
+predict = model.predict(X_test).tolist()
+
+dict = {'Index': X_test.index , 'Malicious': y_test, 'Pred': predict}
        
 # create a Pandas DataFrame from the dictionary
 df = pd.DataFrame(dict) 
-    
 # write the DataFrame to a CSV file
-df.to_csv('Qda.csv', index=False)
+df.to_csv('Qda.csv', index=False) 
+
 
 print(classification_report(y_test, model.predict(X_test)))
 print(confusion_matrix(y_test, model.predict(X_test)))

@@ -21,30 +21,30 @@ HERE = dirname(abspath(__file__))
 R, S = "focus_results.json", "focus_similarity.json"
 
 CHECKS = [
-    # ---------------------------------------------------------- Section 6.1
-    ("Sec. 6.1  FocusDS", "distinct repackaged apps in LargeDS", R, "dataset.full_repackaged", 4067, 0),
-    ("Sec. 6.1  FocusDS", "FocusDS size", R, "dataset.focus_total", 2722, 0),
-    ("Sec. 6.1  FocusDS", "malware samples", R, "dataset.focus_malware", 1541, 0),
-    ("Sec. 6.1  FocusDS", "non-malware samples", R, "dataset.focus_benign", 1181, 0),
-    ("Sec. 6.1  FocusDS", "gappusin samples", R, "dataset.per_family.gappusin", 1334, 0),
-    ("Sec. 6.1  FocusDS", "revmob samples", R, "dataset.per_family.revmob", 207, 0),
-    ("Sec. 6.1  FocusDS", "MAS true positives on FocusDS", R, "mas_on_focus_full.TP", 279, 0),
-    ("Sec. 6.1  FocusDS", "MAS false positives on FocusDS", R, "mas_on_focus_full.FP", 220, 0),
-    ("Sec. 6.1  FocusDS", "MAS false negatives on FocusDS", R, "mas_on_focus_full.FN", 1262, 0),
-    ("Sec. 6.1  FocusDS", "MAS F1 on FocusDS", R, "mas_on_focus_full.f1", 0.27, 0.005),
-    ("Sec. 6.1  FocusDS", "MAS gappusin TP (dedup.)", R, "mas_per_family_full.gappusin.TP", 164, 0),
-    ("Sec. 6.1  FocusDS", "MAS gappusin FN", R, "mas_per_family_full.gappusin.FN", 1170, 0),
-    ("Sec. 6.1  FocusDS", "MAS revmob TP", R, "mas_per_family_full.revmob.TP", 115, 0),
-    ("Sec. 6.1  FocusDS", "MAS revmob FN", R, "mas_per_family_full.revmob.FN", 92, 0),
+    # ------------------------------------------------ Section 5.1 (FocusDS)
+    ("Sec. 5.1  FocusDS", "distinct repackaged apps in LargeDS", R, "dataset.full_repackaged", 4067, 0),
+    ("Sec. 5.1  FocusDS", "FocusDS size", R, "dataset.focus_total", 2722, 0),
+    ("Sec. 5.1  FocusDS", "malware samples", R, "dataset.focus_malware", 1541, 0),
+    ("Sec. 5.1  FocusDS", "non-malware samples", R, "dataset.focus_benign", 1181, 0),
+    ("Sec. 5.1  FocusDS", "gappusin samples", R, "dataset.per_family.gappusin", 1334, 0),
+    ("Sec. 5.1  FocusDS", "revmob samples", R, "dataset.per_family.revmob", 207, 0),
+    ("Sec. 5.1  FocusDS", "MAS true positives on FocusDS", R, "mas_on_focus_full.TP", 279, 0),
+    ("Sec. 5.1  FocusDS", "MAS false positives on FocusDS", R, "mas_on_focus_full.FP", 220, 0),
+    ("Sec. 5.1  FocusDS", "MAS false negatives on FocusDS", R, "mas_on_focus_full.FN", 1262, 0),
+    ("Sec. 5.1  FocusDS", "MAS F1 on FocusDS", R, "mas_on_focus_full.f1", 0.27, 0.005),
+    ("Sec. 5.1  FocusDS", "MAS gappusin TP (dedup.)", R, "mas_per_family_full.gappusin.TP", 164, 0),
+    ("Sec. 5.1  FocusDS", "MAS gappusin FN", R, "mas_per_family_full.gappusin.FN", 1170, 0),
+    ("Sec. 5.1  FocusDS", "MAS revmob TP", R, "mas_per_family_full.revmob.TP", 115, 0),
+    ("Sec. 5.1  FocusDS", "MAS revmob FN", R, "mas_per_family_full.revmob.FN", 92, 0),
 
-    # ------------------------------------------------ Section 6.1 (protocol)
-    ("Sec. 6.1  Protocol", "features extracted per app", R, "dataset.n_features_raw", 1596, 0),
-    ("Sec. 6.1  Protocol", "non-constant features", R, "dataset.n_features_used", 1010, 0),
-    ("Sec. 6.1  Protocol", "features selected", R, "dataset.n_features_selected", 20, 0),
-    ("Sec. 6.1  Protocol", "training split size", R, "split.train", 1905, 0),
-    ("Sec. 6.1  Protocol", "test split size", R, "split.test", 817, 0),
-    ("Sec. 6.1  Protocol", "test malware", R, "split.test_malware", 463, 0),
-    ("Sec. 6.1  Protocol", "test non-malware", R, "split.test_benign", 354, 0),
+    # ------------------------------------------------ Section 5.3 (protocol)
+    ("Sec. 5.3  Protocol", "features extracted per app", R, "dataset.n_features_raw", 1596, 0),
+    ("Sec. 5.3  Protocol", "non-constant features", R, "dataset.n_features_used", 1010, 0),
+    ("Sec. 5.3  Protocol", "features selected", R, "dataset.n_features_selected", 20, 0),
+    ("Sec. 5.3  Protocol", "training split size", R, "split.train", 1905, 0),
+    ("Sec. 5.3  Protocol", "test split size", R, "split.test", 817, 0),
+    ("Sec. 5.3  Protocol", "test malware", R, "split.test_malware", 463, 0),
+    ("Sec. 5.3  Protocol", "test non-malware", R, "split.test_benign", 354, 0),
 
     # --------------------------------------------------- Table 8 (CV tuning)
     ("Table 8   Hyper-params", "LDA cross-validated F1", R, "cv.best_params.LDA.cv_f1", 0.742, 0.0005),
@@ -75,42 +75,42 @@ CHECKS = [
     ]],
     ("Table 9   Algorithms", "selected algorithm", R, "best_algorithm", "XGBoost", 0),
 
-    # ------------------------------------------------ Table 10 (importances)
-    ("Table 10  Importances", "top feature", R, "top_features.0.feature", "bwd_byts_b_avg_median_443", 0),
-    ("Table 10  Importances", "top feature importance", R, "top_features.0.importance", 0.1908, 0.0001),
-    ("Table 10  Importances", "2nd feature importance", R, "top_features.1.importance", 0.0775, 0.0001),
-    ("Table 10  Importances", "3rd feature importance", R, "top_features.2.importance", 0.0733, 0.0001),
+    # ------------------------------------------------- Table 10 (comparison)
+    ("Table 10  MAS vs flow", "MAS TP (test)", R, "test_comparison.MAS.TP", 87, 0),
+    ("Table 10  MAS vs flow", "MAS FP (test)", R, "test_comparison.MAS.FP", 78, 0),
+    ("Table 10  MAS vs flow", "MAS FN (test)", R, "test_comparison.MAS.FN", 376, 0),
+    ("Table 10  MAS vs flow", "MAS F1 (test)", R, "test_comparison.MAS.f1", 0.28, 0.005),
+    ("Table 10  MAS vs flow", "DroidXPflow TP", R, "test_comparison.DroidXPflow.TP", 405, 0),
+    ("Table 10  MAS vs flow", "DroidXPflow FP", R, "test_comparison.DroidXPflow.FP", 48, 0),
+    ("Table 10  MAS vs flow", "DroidXPflow FN", R, "test_comparison.DroidXPflow.FN", 58, 0),
+    ("Table 10  MAS vs flow", "DroidXPflow F1", R, "test_comparison.DroidXPflow.f1", 0.88, 0.005),
+    ("Table 10  MAS vs flow", "Combined TP", R, "test_comparison.Combined.TP", 420, 0),
+    ("Table 10  MAS vs flow", "Combined FP", R, "test_comparison.Combined.FP", 117, 0),
+    ("Table 10  MAS vs flow", "Combined F1", R, "test_comparison.Combined.f1", 0.84, 0.005),
 
-    # ------------------------------------------------- Table 11 (comparison)
-    ("Table 11  MAS vs flow", "MAS TP (test)", R, "test_comparison.MAS.TP", 87, 0),
-    ("Table 11  MAS vs flow", "MAS FP (test)", R, "test_comparison.MAS.FP", 78, 0),
-    ("Table 11  MAS vs flow", "MAS FN (test)", R, "test_comparison.MAS.FN", 376, 0),
-    ("Table 11  MAS vs flow", "MAS F1 (test)", R, "test_comparison.MAS.f1", 0.28, 0.005),
-    ("Table 11  MAS vs flow", "DroidXPflow TP", R, "test_comparison.DroidXPflow.TP", 405, 0),
-    ("Table 11  MAS vs flow", "DroidXPflow FP", R, "test_comparison.DroidXPflow.FP", 48, 0),
-    ("Table 11  MAS vs flow", "DroidXPflow FN", R, "test_comparison.DroidXPflow.FN", 58, 0),
-    ("Table 11  MAS vs flow", "DroidXPflow F1", R, "test_comparison.DroidXPflow.f1", 0.88, 0.005),
-    ("Table 11  MAS vs flow", "Combined TP", R, "test_comparison.Combined.TP", 420, 0),
-    ("Table 11  MAS vs flow", "Combined FP", R, "test_comparison.Combined.FP", 117, 0),
-    ("Table 11  MAS vs flow", "Combined F1", R, "test_comparison.Combined.f1", 0.84, 0.005),
+    # --------------------------------------------------- Table 11 (families)
+    ("Table 11  Per family", "gappusin test samples", R, "per_family_test.gappusin.samples", 405, 0),
+    ("Table 11  Per family", "gappusin MAS rate", R, "per_family_test.gappusin.mas_rate", 13.33, 0.01),
+    ("Table 11  Per family", "gappusin DroidXPflow rate", R, "per_family_test.gappusin.flow_rate", 87.41, 0.01),
+    ("Table 11  Per family", "revmob test samples", R, "per_family_test.revmob.samples", 58, 0),
+    ("Table 11  Per family", "revmob MAS rate", R, "per_family_test.revmob.mas_rate", 56.90, 0.01),
+    ("Table 11  Per family", "revmob DroidXPflow rate", R, "per_family_test.revmob.flow_rate", 87.93, 0.01),
+    ("Table 11  Per family", "non-malware MAS false positives", R, "per_family_test.benign.mas_fp", 78, 0),
+    ("Table 11  Per family", "non-malware flow false positives", R, "per_family_test.benign.flow_fp", 48, 0),
 
-    # --------------------------------------------------- Table 12 (families)
-    ("Table 12  Per family", "gappusin test samples", R, "per_family_test.gappusin.samples", 405, 0),
-    ("Table 12  Per family", "gappusin MAS rate", R, "per_family_test.gappusin.mas_rate", 13.33, 0.01),
-    ("Table 12  Per family", "gappusin DroidXPflow rate", R, "per_family_test.gappusin.flow_rate", 87.41, 0.01),
-    ("Table 12  Per family", "revmob test samples", R, "per_family_test.revmob.samples", 58, 0),
-    ("Table 12  Per family", "revmob MAS rate", R, "per_family_test.revmob.mas_rate", 56.90, 0.01),
-    ("Table 12  Per family", "revmob DroidXPflow rate", R, "per_family_test.revmob.flow_rate", 87.93, 0.01),
-    ("Table 12  Per family", "non-malware MAS false positives", R, "per_family_test.benign.mas_fp", 78, 0),
-    ("Table 12  Per family", "non-malware flow false positives", R, "per_family_test.benign.flow_fp", 48, 0),
+    # ------------------------------------------------ Table 12 (importances)
+    ("Table 12  Importances", "top feature", R, "top_features.0.feature", "bwd_byts_b_avg_median_443", 0),
+    ("Table 12  Importances", "top feature importance", R, "top_features.0.importance", 0.1908, 0.0001),
+    ("Table 12  Importances", "2nd feature importance", R, "top_features.1.importance", 0.0775, 0.0001),
+    ("Table 12  Importances", "3rd feature importance", R, "top_features.2.importance", 0.0733, 0.0001),
 
-    # ------------------------------------------- Figure 7 (Venn, Finding 7)
+    # ------------------------------------------- Figure 7 (Venn, Finding 6)
     ("Figure 7  Venn", "true positives only DroidXPflow", R, "contribution.TP_flow_only", 333, 0),
     ("Figure 7  Venn", "true positives only MAS", R, "contribution.TP_mas_only", 15, 0),
     ("Figure 7  Venn", "true positives by both", R, "contribution.TP_both", 72, 0),
     ("Figure 7  Venn", "missed by both", R, "contribution.FN_both", 43, 0),
 
-    # --------------------------------- Table 13 + Finding 8 (Similarity, RQ5)
+    # --------------------------------- Table 13 + Finding 7 (Similarity, RQ5)
     ("Table 13  Similarity", "[0.75,0.95) samples", S, "similarity_bands.3.samples", 104, 0),
     ("Table 13  Similarity", "[0.75,0.95) MAS rate", S, "similarity_bands.3.mas_rate", 23.08, 0.01),
     ("Table 13  Similarity", "[0.75,0.95) flow rate", S, "similarity_bands.3.flow_rate", 85.58, 0.01),

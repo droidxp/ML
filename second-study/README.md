@@ -1,8 +1,8 @@
 # Second Study — DroidXPflow on the blind spots of the MAS approach
 
 Replication package for the second study of the extended version of our ECOOP
-2025 paper. It reproduces **every number** of that section: Tables 8–13,
-Figure 7, and Findings 5–8.
+2025 paper. It reproduces **every number** of that section (Section 5): Tables 8–13,
+Figure 7, and Findings 5–7.
 
 The study asks one question: when the MAS approach fails to flag a repackaged
 app as malware, is that a limitation of *dynamic analysis*, or only of the
@@ -22,13 +22,13 @@ checks the result against the numbers printed in the paper. Expect about a
 minute on 8 cores. A successful run ends with:
 
 ```
-  [OK  ] Sec. 6.1  FocusDS       14/14 values match
-  [OK  ] Sec. 6.1  Protocol      7/7 values match
+  [OK  ] Sec. 5.1  FocusDS       14/14 values match
+  [OK  ] Sec. 5.3  Protocol      7/7 values match
   [OK  ] Table 8   Hyper-params  7/7 values match
   [OK  ] Table 9   Algorithms    50/50 values match
-  [OK  ] Table 10  Importances   4/4 values match
-  [OK  ] Table 11  MAS vs flow   11/11 values match
-  [OK  ] Table 12  Per family    8/8 values match
+  [OK  ] Table 10  MAS vs flow   11/11 values match
+  [OK  ] Table 11  Per family    8/8 values match
+  [OK  ] Table 12  Importances   4/4 values match
   [OK  ] Figure 7  Venn          4/4 values match
   [OK  ] Table 13  Similarity    10/10 values match
 
@@ -62,7 +62,7 @@ Feature columns are named `<cicflowmeter_feature>_<statistic>_<port>`:
 
 76 × 7 × 3 = **1,596**. So `bwd_byts_b_avg_median_443` is the median, over an
 app's HTTPS flows, of the average bulk byte rate in the backward direction —
-the feature that dominates Table 10.
+the feature that dominates Table 12.
 
 ## Outputs
 
@@ -78,16 +78,16 @@ the feature that dominates Table 10.
 
 | Paper | `focus_results.json` key |
 |---|---|
-| §6.1, FocusDS composition | `dataset` |
-| §6.1, MAS baseline on FocusDS | `mas_on_focus_full`, `mas_per_family_full` |
-| §6.1, train/test split | `split` |
+| §5.1, FocusDS composition | `dataset` |
+| §5.1, MAS baseline on FocusDS | `mas_on_focus_full`, `mas_per_family_full` |
+| §5.3, train/test split | `split` |
 | Table 8, hyper-parameters | `cv.best_params` |
 | Table 9, algorithm comparison | `algorithms` |
-| Table 10, feature importances | `top_features` (and `selected_features` for the selection step) |
-| Table 11, MAS vs DroidXPflow vs Combined | `test_comparison` |
-| Table 12, detection per family | `per_family_test` |
-| Figure 7 and Finding 7, Venn | `contribution` |
-| Table 13 and Finding 8 | `similarity_bands`, `spearman_*` in `focus_similarity.json` |
+| Table 10, MAS vs DroidXPflow vs Combined | `test_comparison` |
+| Table 11, detection per family | `per_family_test` |
+| Table 12, feature importances | `top_features` (and `selected_features` for the selection step) |
+| Figure 7 and Finding 6, Venn | `contribution` |
+| Table 13 and Finding 7 | `similarity_bands`, `spearman_*` in `focus_similarity.json` |
 
 ## What the pipeline does
 
@@ -105,10 +105,12 @@ the feature that dominates Table 10.
    Random Forest, fitted **on the training split alone**.
 5. Tunes all seven algorithms by grid search with 5-fold stratified
    cross-validation, again **on the training split alone**, optimizing F1.
-6. Evaluates each on the held-out test split at the **standard decision rule**
+6. Selects the model to report by its **cross-validated F1** (Table 8), so the
+   choice never depends on the test set.
+7. Evaluates each on the held-out test split at the **standard decision rule**
    (probability ≥ 0.5, or the natural SVM boundary), so the seven are compared
    at a common operating point.
-7. Writes the metrics and the predictions of the selected model.
+8. Writes the metrics and the predictions of the selected model.
 
 `focus_similarity.py` reads those predictions — it does **not** refit — so the
 RQ5 analysis necessarily describes the same model as the rest of the section.

@@ -247,7 +247,10 @@ for name, (estimator, grid) in grids.items():
 
 report["cv"] = {"folds": CV_FOLDS, "scoring": "f1", "best_params": best_params}
 report["algorithms"] = results
-best = max(results, key=lambda k: (results[k]["f1"], results[k]["auc"]))
+# Select by the cross-validated F1 on the training split, never by test
+# performance, so that the reported test figures are not optimistically biased
+# by the choice itself.
+best = max(best_params, key=lambda k: best_params[k]["cv_f1"])
 report["best_algorithm"] = best
 
 # ------------------------------------------------- best model vs MAS on test

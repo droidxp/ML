@@ -1,0 +1,13 @@
+# Exact versions used to produce the numbers reported in the paper.
+# The pipeline is deterministic for a given set of versions; estimator
+# defaults and solvers change across releases, so a different set may
+# shift the results. verify.py will tell you if it did.
+numpy==2.5.3
+pandas==3.0.6
+scikit-learn==1.9.1
+scipy==1.18.1
+xgboost==3.4.1
+
+# Only needed by make_figs.py
+matplotlib==3.11.2
+matplotlib-venn==1.1.2

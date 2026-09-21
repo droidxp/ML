@@ -1,4 +1,11 @@
 {
+  "environment": {
+    "python": "3.14.3",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "xgboost": "3.4.1"
+  },
   "dataset": {
     "full_repackaged": 4067,
     "focus_total": 2722,

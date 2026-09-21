@@ -7,11 +7,15 @@ Outputs a JSON blob with every number the paper needs.
 """
 import json
 import os
+import platform
 import warnings
+import zipfile
 from os.path import abspath, dirname, join
 
 import numpy as np
 import pandas as pd
+import sklearn
+import xgboost
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis as QDA
 from sklearn.ensemble import RandomForestClassifier
@@ -27,24 +31,34 @@ warnings.filterwarnings("ignore")
 HERE = dirname(abspath(__file__))
 
 
-def _locate(filename, override):
+def _locate(filename, override, zipped_in=None):
     """Find an input file: $override, then next to this script, then one level
-    up (which is the repository root when these scripts live in a subdirectory
-    of the replication package)."""
+    up (the repository root, when these scripts live in a subdirectory of the
+    replication package). If `zipped_in` names an archive that is present, the
+    file is extracted from it on first use."""
     if override:
         return override
-    for candidate in (HERE, dirname(HERE)):
+    candidates = (HERE, dirname(HERE))
+    for candidate in candidates:
         if os.path.exists(join(candidate, filename)):
             return candidate
+    if zipped_in:
+        for candidate in candidates:
+            archive = join(candidate, zipped_in)
+            if os.path.exists(archive):
+                print(f"extracting {filename} from {zipped_in} (one-off)...")
+                with zipfile.ZipFile(archive) as zf:
+                    zf.extract(filename, candidate)
+                return candidate
     raise SystemExit(
-        f"{filename} not found in {HERE} or {dirname(HERE)}. "
-        f"Unzip Final_file.zip and/or set FOCUS_DATA / FOCUS_ML."
+        f"{filename} not found in {' or '.join(candidates)}."
+        + (f" Nor was {zipped_in}." if zipped_in else "")
+        + " Set FOCUS_DATA / FOCUS_ML to the directory holding it."
     )
 
 
-# Final_file.csv comes from unzipping Final_file.zip; large_ds.csv ships with
-# the replication package.
-DATA = _locate("Final_file.csv", os.environ.get("FOCUS_DATA"))
+# Final_file.csv is shipped compressed; large_ds.csv ships as-is.
+DATA = _locate("Final_file.csv", os.environ.get("FOCUS_DATA"), "Final_file.zip")
 ML = _locate("large_ds.csv", os.environ.get("FOCUS_ML"))
 OUT = HERE
 FOCUS_FAMILIES = ["gappusin", "revmob"]
@@ -77,11 +91,25 @@ meta_cols = ["hash", "sha256", "malicious", "repack", "family", "malware",
              "apidetected", "similarity", "mas", "y"]
 feat_cols = [c for c in focus.columns if c not in meta_cols]
 
-X = focus[feat_cols].replace([np.inf, -np.inf], np.nan).fillna(-1e13)
+# CICFlowMeter leaves a statistic undefined when an app produced no flow on a
+# given port (e.g. the skewness of a single flow), so 3.8% of the cells are NaN
+# or infinite and 3,220 of the 4,067 apps have at least one. We map them to a
+# large negative sentinel rather than to zero, so that "no traffic observed" is
+# distinguishable from "traffic whose measured value is zero"; tree models can
+# then isolate it with a single split.
+NA_SENTINEL = -1e13
+X = focus[feat_cols].replace([np.inf, -np.inf], np.nan).fillna(NA_SENTINEL)
 X = X.loc[:, X.nunique() > 1]          # drop constant columns
 y = focus["y"]
 
 report = {
+    "environment": {
+        "python": platform.python_version(),
+        "numpy": np.__version__,
+        "pandas": pd.__version__,
+        "scikit-learn": sklearn.__version__,
+        "xgboost": xgboost.__version__,
+    },
     "dataset": {
         "full_repackaged": int(len(df)),
         "focus_total": int(len(focus)),

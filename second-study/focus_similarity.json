@@ -1,0 +1,53 @@
+{
+  "similarity_bands": [
+    {
+      "band": "[0.00, 0.25)",
+      "samples": 7,
+      "mas_detected": 3,
+      "mas_rate": 42.86,
+      "flow_detected": 7,
+      "flow_rate": 100.0
+    },
+    {
+      "band": "[0.25, 0.50)",
+      "samples": 7,
+      "mas_detected": 7,
+      "mas_rate": 100.0,
+      "flow_detected": 6,
+      "flow_rate": 85.71
+    },
+    {
+      "band": "[0.50, 0.75)",
+      "samples": 4,
+      "mas_detected": 3,
+      "mas_rate": 75.0,
+      "flow_detected": 3,
+      "flow_rate": 75.0
+    },
+    {
+      "band": "[0.75, 0.95)",
+      "samples": 104,
+      "mas_detected": 24,
+      "mas_rate": 23.08,
+      "flow_detected": 89,
+      "flow_rate": 85.58
+    },
+    {
+      "band": "[0.95, 1.00]",
+      "samples": 341,
+      "mas_detected": 50,
+      "mas_rate": 14.66,
+      "flow_detected": 300,
+      "flow_rate": 87.98
+    }
+  ],
+  "note": "malware samples of the focus subset, test split",
+  "spearman_mas": {
+    "rho": -0.1512,
+    "p_value": 0.001103861346677883
+  },
+  "spearman_flow": {
+    "rho": 0.0375,
+    "p_value": 0.42114095647712324
+  }
+}

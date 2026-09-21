@@ -26,3 +26,19 @@ With this [dataset](https://github.com/droidxp/ML/blob/master/clearFile.py), we 
 + Support Vector Machines - [SVM](https://github.com/droidxp/ML/blob/master/Svm.py). [CSV](https://github.com/droidxp/ML/blob/master/svm.csv) file.
 
 The following Python [code](https://github.com/droidxp/ML/blob/master/allAlgorithms.py) prints the comparison of all algorithms.
+
+### Second Study (ECOOP extension)
+
+The [`second-study/`](https://github.com/droidxp/ML/tree/master/second-study)
+directory holds the replication package for the second study of the extended
+version of the ECOOP 2025 paper, which applies DroidXPflow to `FocusDS` --- the
+subset of samples on which the MAS approach performs worst. It reproduces every
+number of that section from `large_ds.csv` and `Final_file.zip`; see its own
+[README](https://github.com/droidxp/ML/blob/master/second-study/README.md).
+
+Its pipeline differs from the scripts above in two respects, both of which
+remove an optimistic bias: the 20 features are selected on the training split
+alone rather than over the complete dataset, and every hyper-parameter is
+re-tuned by cross-validation inside the training split instead of being reused,
+with all algorithms compared at the same decision threshold. Its numbers are
+therefore lower than, and not directly comparable to, the ones reported above.
